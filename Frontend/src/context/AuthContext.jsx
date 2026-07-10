@@ -16,11 +16,10 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const checkSession = async () => {
             try {
-                // Hits a protected endpoint (e.g., /auth/me or /auth/dashboard)
                 // Since withCredentials: true is active, cookies are automatically attached
-                const response = await axiosInstance.get('/dashboard'); 
-                if (response.data?.user) {
-                    setUser(response.data.user); // Re-authenticate user state seamlessly
+                const response = await axiosInstance.get('/user/profile'); 
+                if (response.data && response.data.id) {
+                    setUser(response.data); // Re-authenticate user state seamlessly
                 }
             } catch (err) {
                 console.log("No active or valid session cookie found.");
@@ -44,13 +43,19 @@ export function AuthProvider({ children }) {
     // Logout handler that clears local state and handles backend cleanup
     const logout = async () => {
         try {
-            // Optional: Call backend to clear HTTP-Only cookie explicitly
-            // await axiosInstance.post('/logout'); 
+            // Call backend to clear HTTP-Only cookies
+            await axiosInstance.post('/auth/logout'); 
             setUser(null);
-            localStorage.removeItem('auth_token'); // Clean up token if using dual-accept model
+            localStorage.removeItem('auth_token'); // Clean up tokens if using dual-accept model
+            localStorage.removeItem('refresh_token');
             window.location.href = '/login';
         } catch (err) {
             console.error("Logout error", err);
+            // Fallback clear state even if API fails
+            setUser(null);
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('refresh_token');
+            window.location.href = '/login';
         }
     };
 

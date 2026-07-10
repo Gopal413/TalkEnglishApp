@@ -6,20 +6,20 @@ import axiosInstance from './axiosInstance';
 
 // Step 1: Send OTP to email
 export const sendOtpOnly = async (email) => {
-    const response = await axiosInstance.post('/register/send-otp', { email });
+    const response = await axiosInstance.post('/auth/register/send-otp', { email });
     return response.data;
 };
 
 // Step 2: Verify OTP
 export const verifyOtpOnly = async (otp) => {
-    const response = await axiosInstance.post('/register/verify-otp', { otp });
+    const response = await axiosInstance.post('/auth/register/verify-otp', { otp });
     return response.data;
 };
 
 // Step 3: Complete registration form profile data
 export const completeRegistration = async (profileData) => {
     // profileData is an object: { name, password, phone, age, state, country }
-    const response = await axiosInstance.post('/register/complete', profileData);
+    const response = await axiosInstance.post('/auth/register/complete', profileData);
     return response.data;
 };
 
@@ -29,28 +29,88 @@ export const completeRegistration = async (profileData) => {
 
 // User/Admin Login
 export const loginUser = async (email, password) => {
-    const response = await axiosInstance.post('/login', { email, password });
+    const response = await axiosInstance.post('/auth/login', { email, password });
+    return response.data;
+};
+
+// Get current user profile (protected)
+export const getUserProfile = async () => {
+    // The leading '/' makes the path absolute from the host, ignoring the baseURL's path part.
+    const response = await axiosInstance.get('/user/profile');
+    return response.data;
+};
+
+// 🚩 NEW PROTECTED ROUTE: Send first-time choices to database
+export const submitOnboardingData = async (onboardingPayload) => {
+    // Expects payload structure: { level, goal, dailyReminder }
+    const response = await axiosInstance.put('/user/onboarding', onboardingPayload);
+    return response.data;
+};
+
+// Fetch user progress statistics
+export const getUserProgress = async () => {
+    const response = await axiosInstance.get('/user/progress');
+    return response.data;
+};
+
+// Update user settings configuration
+export const updateUserSettings = async (settingsPayload) => {
+    // settingsPayload is: { level, goal, dailyReminder }
+    const response = await axiosInstance.put('/user/settings', settingsPayload);
+    return response.data;
+};
+
+// Translate English text to target native language using AI
+export const translateTextApi = async (text, targetLanguage) => {
+    const response = await axiosInstance.post('/user/translate', { text, targetLanguage });
     return response.data;
 };
 
 // ==========================================
 // PASSWORD RECOVERY PIPELINE
 // ==========================================
-
-// Step 1: Submit email for forget password request
+// Step 1: Frontend sends email -> Backend drops 'reset_email' cookie
 export const forgetPassword = async (email) => {
-    const response = await axiosInstance.post('/password/forget', { email });
+    const response = await axiosInstance.post('/auth/password/forget', { email });
     return response.data;
 };
 
-// Step 2: Verify reset code OTP
+// Step 2: Frontend sends ONLY otp -> Backend reads 'reset_email' cookie automatically
 export const verifyResetOtp = async (otp) => {
-    const response = await axiosInstance.post('/password/verify-otp', { otp });
+    const response = await axiosInstance.post('/auth/password/verify-otp', { otp });
     return response.data;
 };
 
-// Step 3: Submit new secure password
+// Step 3: Frontend sends ONLY newPassword -> Backend reads cookie & verifies the state
 export const resetPassword = async (newPassword) => {
-    const response = await axiosInstance.post('/password/reset', { newPassword });
+    const response = await axiosInstance.post('/auth/password/reset', { newPassword });
+    return response.data;
+};
+
+// ==========================================
+// LESSONS API
+// ==========================================
+
+// Get all lessons with the user's completion status
+export const getAllLessonsApi = async () => {
+    const response = await axiosInstance.get('/lessons');
+    return response.data;
+};
+
+// Get full content of a single lesson (steps + quiz)
+export const getLessonByIdApi = async (lessonId) => {
+    const response = await axiosInstance.get(`/lessons/${lessonId}`);
+    return response.data;
+};
+
+// Submit quiz result and mark lesson as completed (one-time only)
+export const completeLessonApi = async (lessonId, score, total) => {
+    const response = await axiosInstance.post(`/lessons/${lessonId}/complete`, { score, total });
+    return response.data;
+};
+
+// Check grammar of user-submitted text
+export const checkGrammarApi = async (text, conversationId) => {
+    const response = await axiosInstance.post('/api/ai/grammar', { text, conversationId });
     return response.data;
 };
