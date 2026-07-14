@@ -61,53 +61,73 @@ function Onboarding() {
     };
 
     return (
-        <Container maxWidth="sm" sx={{ mt: { xs: 4, sm: 8 }, mb: 4, px: { xs: 2, sm: 3 } }}>
-            <Paper elevation={4} sx={{ p: { xs: 3, sm: 5 }, borderRadius: '16px' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-                    <Box sx={{ width: 60, height: 60, borderRadius: '50%', backgroundColor: 'primary.light', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
-                        <TranslateIcon color="primary" sx={{ fontSize: 32 }} />
+        <Container maxWidth="sm" sx={{ mt: { xs: 4, sm: 8 }, mb: 4, px: { xs: 2.5, sm: 3 } }}>
+            <Paper 
+                elevation={0} 
+                sx={{ 
+                    p: { xs: 4, sm: 6 }, 
+                    borderRadius: '24px',
+                    border: '1px solid rgba(0,0,0,0.04)',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.02)'
+                }}
+            >
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 4.5 }}>
+                    <Box 
+                        sx={{ 
+                            width: 68, 
+                            height: 68, 
+                            borderRadius: '50%', 
+                            backgroundColor: 'primary.light', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+                            mb: 2,
+                            boxShadow: '0 4px 12px rgba(74, 155, 155, 0.2)'
+                        }}
+                    >
+                        <TranslateIcon color="primary" sx={{ fontSize: 34 }} />
                     </Box>
-                    <Typography component="h1" variant="h4" fontWeight="800" textAlign="center">
-                        Personalize EnglishTalk
+                    <Typography component="h1" variant="h5" fontWeight="900" textAlign="center" sx={{ color: '#1a1a2e' }}>
+                        Personalize TalkEnglish
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ mt: 1 }}>
+                    <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ mt: 1, lineHeight: 1.5, fontSize: '13.5px' }}>
                         Help us adapt the conversational difficulty engines to fit your profile.
                     </Typography>
                 </Box>
 
-                {error && <Alert severity="error" sx={{ mb: 3, borderRadius: '8px' }}>{error}</Alert>}
+                {error && <Alert severity="error" sx={{ mb: 3.5, borderRadius: '12px' }}>{error}</Alert>}
 
                 <Box component="form" onSubmit={handleOnboardingSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                     
                     {/* ENGLISH FLUENCY LEVEL CHOICE ENTRY */}
                     <FormControl component="fieldset">
-                        <FormLabel component="legend" sx={{ fontWeight: '700', color: 'text.primary', mb: 1 }}>
+                        <FormLabel component="legend" sx={{ fontWeight: '900', color: '#1a1a2e', mb: 1.5 }}>
                             What is your current speaking level?
                         </FormLabel>
                         <RadioGroup value={level} onChange={(e) => setLevel(e.target.value)}>
-                            <FormControlLabel value="beginner" control={<Radio />} label="Beginner (Just starting out)" />
-                            <FormControlLabel value="intermediate" control={<Radio />} label="Intermediate (Can hold basic talks)" />
-                            <FormControlLabel value="advanced" control={<Radio />} label="Advanced (Fluent discussions)" />
+                            <FormControlLabel value="beginner" control={<Radio size="small" />} label="Beginner (Just starting out)" />
+                            <FormControlLabel value="intermediate" control={<Radio size="small" />} label="Intermediate (Can hold basic talks)" />
+                            <FormControlLabel value="advanced" control={<Radio size="small" />} label="Advanced (Fluent discussions)" />
                         </RadioGroup>
                     </FormControl>
 
-                    {/* TARGET INTENT PRACTICE GOAL CHOICE ENTRY[cite: 1] */}
+                    {/* TARGET INTENT PRACTICE GOAL CHOICE ENTRY */}
                     <FormControl component="fieldset">
-                        <FormLabel component="legend" sx={{ fontWeight: '700', color: 'text.primary', mb: 1 }}>
+                        <FormLabel component="legend" sx={{ fontWeight: '900', color: '#1a1a2e', mb: 1.5 }}>
                             What is your main practice goal?
                         </FormLabel>
                         <RadioGroup value={goal} onChange={(e) => setGoal(e.target.value)}>
-                            <FormControlLabel value="travel" control={<Radio />} label="Travel (Vacations & tourism)" />
-                            <FormControlLabel value="business" control={<Radio />} label="Business (Career growth & meetings)" />
-                            <FormControlLabel value="casual" control={<Radio />} label="Casual (Daily friendly chats)" />
+                            <FormControlLabel value="travel" control={<Radio size="small" />} label="Travel (Vacations & tourism)" />
+                            <FormControlLabel value="business" control={<Radio size="small" />} label="Business (Career growth & meetings)" />
+                            <FormControlLabel value="casual" control={<Radio size="small" />} label="Casual (Daily friendly chats)" />
                         </RadioGroup>
                     </FormControl>
 
-                    {/* DAILY NOTIFICATION ACCESSIBILITY SWITCH[cite: 1] */}
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 2, bgcolor: 'action.hover', borderRadius: '8px' }}>
+                    {/* DAILY NOTIFICATION ACCESSIBILITY SWITCH */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 2.5, bgcolor: '#F8FAFC', borderRadius: '16px', border: '1px solid rgba(0,0,0,0.02)' }}>
                         <Box>
-                            <Typography variant="body1" fontWeight="600">Daily Practice Reminder</Typography>
-                            <Typography variant="caption" color="text.secondary">We will remind you to keep up your consistency streak.</Typography>
+                            <Typography variant="body2" fontWeight="800" sx={{ color: '#1a1a2e' }}>Daily Practice Reminder</Typography>
+                            <Typography variant="caption" color="text.secondary" sx={{ fontWeight: '500', mt: 0.2, display: 'block' }}>We will remind you to keep up your consistency streak.</Typography>
                         </Box>
                         <Switch checked={dailyReminder} onChange={(e) => setDailyReminder(e.target.checked)} color="primary" />
                     </Box>
@@ -116,7 +136,15 @@ function Onboarding() {
                     <Button
                         type="submit" fullWidth variant="contained" size="large"
                         disabled={loading || !level || !goal}
-                        sx={{ mt: 2, py: 1.5, borderRadius: '8px', fontWeight: 'bold', textTransform: 'none', fontSize: '16px' }}
+                        sx={{ 
+                            mt: 2, 
+                            py: 1.6, 
+                            borderRadius: '24px', 
+                            fontWeight: '700', 
+                            textTransform: 'none', 
+                            fontSize: '15px',
+                            boxShadow: '0 4px 14px rgba(74, 155, 155, 0.25)'
+                        }}
                     >
                         {loading ? <CircularProgress size={26} color="inherit" /> : 'Get Started'}
                     </Button>

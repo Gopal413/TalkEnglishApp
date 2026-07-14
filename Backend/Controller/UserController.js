@@ -82,6 +82,7 @@ async function getProfile(req, res) {
             id: user._id,
             name: user.name,
             email: user.email,
+            role: user.role,
             isOnboarded: user.isOnboarded,
             level: user.level,
             goal: user.goal,
@@ -206,6 +207,7 @@ async function updateUserSettings(req, res) {
             user: {
                 id: user._id,
                 name: user.name,
+                role: user.role,
                 isOnboarded: user.isOnboarded,
                 level: user.level,
                 goal: user.goal,

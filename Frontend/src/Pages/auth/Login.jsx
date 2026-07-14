@@ -50,7 +50,12 @@ function Login() {
             if (data.refreshToken) localStorage.setItem('refresh_token', data.refreshToken);
             login(data.user); 
 
-            if (data.user.isOnboarded === false) {
+            // Role-based redirect
+            if (data.user.role === 'superadmin') {
+                navigate('/superadmin', { replace: true });
+            } else if (data.user.role === 'admin') {
+                navigate('/admin', { replace: true });
+            } else if (data.user.isOnboarded === false) {
                 navigate('/onboarding', { replace: true });
             } else {
                 navigate('/dashboard', { replace: true });
@@ -84,12 +89,14 @@ function Login() {
                     {...register('email')}
                     error={!!errors.email}
                     helperText={errors.email?.message}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <EmailOutlined sx={{ color: 'rgba(255,255,255,0.5)' }} fontSize="small" />
-                            </InputAdornment>
-                        ),
+                    slotProps={{
+                        input: {
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <EmailOutlined sx={{ color: 'rgba(255,255,255,0.5)' }} fontSize="small" />
+                                </InputAdornment>
+                            ),
+                        }
                     }}
                 />
 
@@ -107,24 +114,24 @@ function Login() {
                     {...register('password')}
                     error={!!errors.password}
                     helperText={errors.password?.message}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" sx={{ color: 'rgba(255,255,255,0.5)' }}>
-                                    {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
-                                </IconButton>
-                            </InputAdornment>
-                        ),
+                    slotProps={{
+                        input: {
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" sx={{ color: 'rgba(255,255,255,0.5)' }}>
+                                        {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }
                     }}
                 />
 
-                <Grid container sx={{ justifyContent: "flex-end", mt: 1, mb: 2 }}>
-                    <Grid item>
-                        <Link component={RouterLink} to="/forgot-password" variant="body2" fontWeight="600" sx={{ color: '#4A9B9B', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
-                            Forgot password?
-                        </Link>
-                    </Grid>
-                </Grid>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1, mb: 2 }}>
+                    <Link component={RouterLink} to="/forgot-password" variant="body2" fontWeight="600" sx={{ color: '#4A9B9B', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
+                        Forgot password?
+                    </Link>
+                </Box>
 
                 {/* SUBMIT BUTTON */}
                 <Button

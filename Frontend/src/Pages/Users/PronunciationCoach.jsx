@@ -87,12 +87,36 @@ export default function PronunciationCoach() {
   };
 
   return (
-    <Paper variant="outlined" sx={{ p: 2.5, mb: 3, borderRadius: 3, bgcolor: '#f4f6f8' }}>
-      <Typography variant="subtitle2" fontWeight="bold" color="primary" gutterBottom>
+    <Paper 
+      variant="outlined" 
+      sx={{ 
+        p: 3, 
+        mb: 3, 
+        borderRadius: '16px', 
+        bgcolor: '#FAFBFC',
+        border: '1px solid rgba(0,0,0,0.05)',
+        boxShadow: '0 4px 14px rgba(0,0,0,0.01)'
+      }}
+    >
+      <Typography variant="subtitle2" fontWeight="800" color="primary" gutterBottom sx={{ fontSize: '12px', letterSpacing: '0.5px' }}>
         🎙️ PRONUNCIATION COACH MODE:
       </Typography>
       
-      <Typography variant="body1" sx={{ my: 1.5, p: 1.5, bgcolor: '#ffffff', borderRadius: 2, borderLeft: '4px solid #1976d2', fontStyle: 'italic' }}>
+      <Typography 
+        variant="body1" 
+        sx={{ 
+          my: 2, 
+          p: 2, 
+          bgcolor: 'rgba(25, 118, 210, 0.03)', 
+          borderRadius: '12px', 
+          borderLeft: '4px solid #1976d2', 
+          fontStyle: 'italic',
+          color: '#1E293B',
+          fontWeight: '500',
+          fontSize: '14.5px',
+          lineHeight: 1.5
+        }}
+      >
         "{targetSentence}"
       </Typography>
 
@@ -101,32 +125,52 @@ export default function PronunciationCoach() {
         color={isRecording ? "error" : "primary"} 
         onClick={handleStartSpeaking}
         startIcon={isRecording ? <StopIcon /> : <MicIcon />}
-        sx={{ borderRadius: 5, mb: 2 }}
+        sx={{ 
+          borderRadius: '24px', 
+          mb: 2.5,
+          px: 3,
+          py: 1,
+          fontWeight: '700',
+          fontSize: '13px',
+          textTransform: 'none',
+          boxShadow: isRecording ? '0 4px 12px rgba(211,47,47,0.25)' : '0 4px 12px rgba(25, 118, 210, 0.25)'
+        }}
       >
         {isRecording ? "Listening closely..." : "Read Sentence Aloud"}
       </Button>
 
       {transcription && (
-        <Box sx={{ mt: 1 }}>
-          <Typography variant="caption" display="block" color="text.secondary">
-            <strong>What I Heard:</strong> "{transcription}"
+        <Box sx={{ mt: 1, mb: 2 }}>
+          <Typography variant="caption" display="block" color="text.secondary" sx={{ fontSize: '12px' }}>
+            <strong style={{ color: '#1E293B' }}>What I Heard:</strong> "{transcription}"
           </Typography>
         </Box>
       )}
 
       {pronunciationScore !== null && (
-        <Box sx={{ mt: 2, p: 1.5, bgcolor: '#e8f5e9', borderRadius: 2, display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <CheckCircleOutlineIcon color="success" />
+        <Box 
+          sx={{ 
+            mt: 2, 
+            p: 2.5, 
+            bgcolor: pronunciationScore >= 80 ? '#E8F5E9' : '#FFEBEE', 
+            borderRadius: '12px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 2,
+            border: pronunciationScore >= 80 ? '1px solid #C8E6C9' : '1px solid #FFCDD2'
+          }}
+        >
+          <CheckCircleOutlineIcon color={pronunciationScore >= 80 ? "success" : "error"} sx={{ fontSize: '28px' }} />
           <Box>
-            <Typography variant="body2" fontWeight="bold" color="success.main">
+            <Typography variant="body2" fontWeight="800" color={pronunciationScore >= 80 ? "success.main" : "error.main"} sx={{ fontSize: '14.5px' }}>
               Accuracy Score: {pronunciationScore}%
             </Typography>
             {mispronouncedWords.length > 0 ? (
-              <Typography variant="caption" display="block" color="error.main">
-                Try practicing these words again: <strong>{mispronouncedWords.join(', ')}</strong>
+              <Typography variant="caption" display="block" color="error.main" sx={{ mt: 0.5, fontWeight: '500', fontSize: '11px' }}>
+                Try practicing these words again: <strong style={{ textDecoration: 'underline' }}>{mispronouncedWords.join(', ')}</strong>
               </Typography>
             ) : (
-              <Typography variant="caption" display="block" color="success.main">
+              <Typography variant="caption" display="block" color="success.main" sx={{ mt: 0.5, fontWeight: '500', fontSize: '11px' }}>
                 Perfect pronunciation! Excellent work! 🎉
               </Typography>
             )}

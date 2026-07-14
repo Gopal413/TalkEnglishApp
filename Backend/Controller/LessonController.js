@@ -1,5 +1,5 @@
 const LessonModel = require('../Models/LessonModel');
-const userModel = require('../Models/userModel');
+const UserModel = require('../Models/UserModel');
 
 
 // =========================================================================
@@ -13,23 +13,33 @@ async function getAllLessons(req, res) {
             'lessonId title category difficulty description estimatedMinutes emoji unlockAfter'
         ).lean();
 
-        const user = await userModel.findById(req.user.id)
+        // Sort lessons alphabetically by lessonId to establish a stable progression
+        lessons.sort((a, b) => a.lessonId.localeCompare(b.lessonId));
+
+        const user = await UserModel.findById(req.user.id)
             .select('completedLessons level')
             .lean();
 
         const completedIds = (user?.completedLessons || []).map(c => c.lessonId);
 
-        const completedBeginnerCount = (user?.completedLessons || []).filter(c => {
-            const lesson = lessons.find(l => l.lessonId === c.lessonId);
-            return lesson?.difficulty === 'beginner';
-        }).length;
+        const enriched = lessons.map((lesson, index) => {
+            const isCompleted = completedIds.includes(lesson.lessonId);
+            const completionData = user?.completedLessons?.find(c => c.lessonId === lesson.lessonId) || null;
+            
+            // Sequential Unlock: First lesson is always open, next opens only when previous completes
+            let isLocked = false;
+            if (index > 0) {
+                const prevLesson = lessons[index - 1];
+                isLocked = !completedIds.includes(prevLesson.lessonId);
+            }
 
-        const enriched = lessons.map(lesson => ({
-            ...lesson,
-            isCompleted: completedIds.includes(lesson.lessonId),
-            completionData: user?.completedLessons?.find(c => c.lessonId === lesson.lessonId) || null,
-            isLocked: lesson.unlockAfter > 0 && completedBeginnerCount < lesson.unlockAfter
-        }));
+            return {
+                ...lesson,
+                isCompleted,
+                completionData,
+                isLocked
+            };
+        });
 
         return res.status(200).json({
             lessons: enriched,

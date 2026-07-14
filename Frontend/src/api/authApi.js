@@ -75,15 +75,15 @@ export const forgetPassword = async (email) => {
     return response.data;
 };
 
-// Step 2: Frontend sends ONLY otp -> Backend reads 'reset_email' cookie automatically
-export const verifyResetOtp = async (otp) => {
-    const response = await axiosInstance.post('/auth/password/verify-otp', { otp });
+// Step 2: Frontend sends otp and optional email backup
+export const verifyResetOtp = async (otp, email) => {
+    const response = await axiosInstance.post('/auth/password/verify-otp', { otp, email });
     return response.data;
 };
 
-// Step 3: Frontend sends ONLY newPassword -> Backend reads cookie & verifies the state
-export const resetPassword = async (newPassword) => {
-    const response = await axiosInstance.post('/auth/password/reset', { newPassword });
+// Step 3: Frontend sends newPassword and optional email backup
+export const resetPassword = async (newPassword, email) => {
+    const response = await axiosInstance.post('/auth/password/reset', { newPassword, email });
     return response.data;
 };
 

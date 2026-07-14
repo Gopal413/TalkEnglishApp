@@ -141,59 +141,69 @@ export default function LessonViewer() {
             <IconButton onClick={() => navigate('/lessons')} sx={{ color: '#fff', p: 0.5 }}>
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Lessons Library</Typography>
+            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.75)', fontWeight: '700' }}>Lessons Library</Typography>
           </Box>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
-            <Typography sx={{ fontSize: '28px' }}>{lesson.emoji}</Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.8, mb: 2.5 }}>
+            <Typography sx={{ fontSize: '32px' }}>{lesson.emoji}</Typography>
             <Box>
-              <Typography variant="h6" fontWeight="800" color="#fff" sx={{ lineHeight: 1.2 }}>{lesson.title}</Typography>
-              <Chip label={lesson.difficulty} size="small" sx={{ bgcolor: diff.bg, color: diff.color, fontWeight: 'bold', fontSize: '10px', height: '18px', mt: 0.5 }} />
+              <Typography variant="h6" fontWeight="900" color="#fff" sx={{ lineHeight: 1.2 }}>{lesson.title}</Typography>
+              <Chip label={lesson.difficulty} size="small" sx={{ bgcolor: diff.bg, color: diff.color, fontWeight: '800', fontSize: '10px', height: '18px', mt: 0.5, borderRadius: '6px' }} />
             </Box>
           </Box>
 
           {/* Step progress bar */}
-          <Box sx={{ mb: 0.5, display: 'flex', justifyContent: 'space-between' }}>
-            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.75)' }}>
+          <Box sx={{ mb: 0.8, display: 'flex', justifyContent: 'space-between' }}>
+            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.8)', fontWeight: '700' }}>
               {showQuiz ? 'Quiz' : `Step ${currentStep + 1} of ${totalSteps}`}
             </Typography>
-            <Typography variant="caption" sx={{ color: '#fff', fontWeight: 'bold' }}>{progressPct}%</Typography>
+            <Typography variant="caption" sx={{ color: '#fff', fontWeight: '900' }}>{progressPct}%</Typography>
           </Box>
           <LinearProgress
             variant="determinate"
             value={progressPct}
-            sx={{ height: 6, borderRadius: 3, bgcolor: 'rgba(255,255,255,0.2)', '& .MuiLinearProgress-bar': { bgcolor: CORAL, borderRadius: 3 } }}
+            sx={{ height: 8, borderRadius: 4, bgcolor: 'rgba(255,255,255,0.2)', '& .MuiLinearProgress-bar': { bgcolor: CORAL, borderRadius: 4 } }}
           />
         </Container>
       </Box>
 
-      <Container maxWidth="sm" sx={{ mt: 2, px: { xs: 2, sm: 3 } }}>
+      <Container maxWidth="sm" sx={{ mt: 3.5, px: { xs: 2.5, sm: 3 } }}>
 
         {/* ── STEP VIEW ── */}
         {!showQuiz && (
           <Box>
-            <Paper elevation={0} sx={{ p: 3, borderRadius: 3, border: '1px solid rgba(0,0,0,0.06)', bgcolor: '#fff', mb: 2 }}>
+            <Paper 
+              elevation={0} 
+              sx={{ 
+                p: 3.5, 
+                borderRadius: '24px', 
+                border: '1px solid rgba(0,0,0,0.04)', 
+                bgcolor: '#fff', 
+                mb: 3,
+                boxShadow: '0 8px 30px rgba(0,0,0,0.01)'
+              }}
+            >
               {/* Step title */}
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                <Box sx={{ width: 28, height: 28, borderRadius: '50%', bgcolor: '#1e3c72', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <Typography variant="caption" sx={{ color: '#fff', fontWeight: 'bold', fontSize: '11px' }}>{currentStep + 1}</Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2.5 }}>
+                <Box sx={{ width: 30, height: 30, borderRadius: '50%', bgcolor: '#205E5E', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Typography variant="caption" sx={{ color: '#fff', fontWeight: '800', fontSize: '11px' }}>{currentStep + 1}</Typography>
                 </Box>
                 <Typography variant="body1" fontWeight="800" color="#1a1a2e">{lesson.steps[currentStep].title}</Typography>
               </Box>
 
               {/* Explanation */}
-              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8, mb: 2.5 }}>
+              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8, mb: 3, fontSize: '13.5px', fontWeight: '500' }}>
                 {lesson.steps[currentStep].explanation}
               </Typography>
 
-              <Divider sx={{ mb: 2 }} />
+              <Divider sx={{ mb: 2.5 }} />
 
               {/* Example sentence with TTS button */}
-              <Box sx={{ p: 2, bgcolor: '#F0F4FF', borderRadius: 2.5, border: '1px solid #C7D2FE', mb: lesson.steps[currentStep].tip ? 2 : 0 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 1 }}>
-                  <Box>
-                    <Typography variant="caption" sx={{ color: '#6366F1', fontWeight: 'bold', display: 'block', mb: 0.5 }}>EXAMPLE</Typography>
-                    <Typography variant="body2" sx={{ color: '#1a1a2e', fontStyle: 'italic', lineHeight: 1.7, fontWeight: '500' }}>
+              <Box sx={{ p: 2.5, bgcolor: '#F0F4FF', borderRadius: '16px', border: '1px solid #C7D2FE', mb: lesson.steps[currentStep].tip ? 2.5 : 0 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 1.5 }}>
+                  <Box sx={{ minWidth: 0 }}>
+                    <Typography variant="caption" sx={{ color: '#6366F1', fontWeight: '800', display: 'block', mb: 0.8, letterSpacing: '0.5px' }}>EXAMPLE</Typography>
+                    <Typography variant="body2" sx={{ color: '#1E293B', fontStyle: 'italic', lineHeight: 1.7, fontWeight: '600', fontSize: '14px' }}>
                       "{lesson.steps[currentStep].example}"
                     </Typography>
                   </Box>
@@ -209,9 +219,9 @@ export default function LessonViewer() {
 
               {/* Tip */}
               {lesson.steps[currentStep].tip && (
-                <Box sx={{ p: 2, bgcolor: '#FFFBEB', borderRadius: 2.5, border: '1px solid #FDE68A', mt: 2 }}>
-                  <Typography variant="caption" sx={{ color: '#D97706', fontWeight: 'bold', display: 'block', mb: 0.5 }}>💡 TIP</Typography>
-                  <Typography variant="body2" sx={{ color: '#92400E', lineHeight: 1.7 }}>
+                <Box sx={{ p: 2.5, bgcolor: '#FFFDF0', borderRadius: '16px', border: '1px solid #FFE082', mt: 2.5 }}>
+                  <Typography variant="caption" sx={{ color: '#D97706', fontWeight: '800', display: 'block', mb: 0.8, letterSpacing: '0.5px' }}>💡 TIP</Typography>
+                  <Typography variant="body2" sx={{ color: '#92400E', lineHeight: 1.7, fontSize: '13.5px', fontWeight: '500' }}>
                     {lesson.steps[currentStep].tip}
                   </Typography>
                 </Box>
@@ -219,13 +229,21 @@ export default function LessonViewer() {
             </Paper>
 
             {/* Navigation buttons */}
-            <Box sx={{ display: 'flex', gap: 1.5 }}>
+            <Box sx={{ display: 'flex', gap: 2 }}>
               <Button
                 variant="outlined"
                 startIcon={<ArrowBackIcon />}
                 onClick={() => setCurrentStep(s => s - 1)}
                 disabled={currentStep === 0}
-                sx={{ flex: 1, borderRadius: 2.5, textTransform: 'none', fontWeight: 'bold', py: 1.2 }}
+                sx={{ 
+                  flex: 1, 
+                  borderRadius: '24px', 
+                  textTransform: 'none', 
+                  fontWeight: '700', 
+                  py: 1.4,
+                  borderWidth: '1.5px',
+                  '&:hover': { borderWidth: '1.5px' }
+                }}
               >
                 Previous
               </Button>
@@ -234,7 +252,16 @@ export default function LessonViewer() {
                   variant="contained"
                   endIcon={<ArrowForwardIcon />}
                   onClick={() => setCurrentStep(s => s + 1)}
-                  sx={{ flex: 2, borderRadius: 2.5, textTransform: 'none', fontWeight: 'bold', py: 1.2, bgcolor: '#1e3c72', '&:hover': { bgcolor: '#2a5298' } }}
+                  sx={{ 
+                    flex: 2, 
+                    borderRadius: '24px', 
+                    textTransform: 'none', 
+                    fontWeight: '700', 
+                    py: 1.4, 
+                    bgcolor: '#205E5E', 
+                    '&:hover': { bgcolor: '#164343' },
+                    boxShadow: '0 4px 14px rgba(32, 94, 94, 0.25)'
+                  }}
                 >
                   Next Step
                 </Button>
@@ -243,7 +270,16 @@ export default function LessonViewer() {
                   variant="contained"
                   endIcon={<ArrowForwardIcon />}
                   onClick={() => setShowQuiz(true)}
-                  sx={{ flex: 2, borderRadius: 2.5, textTransform: 'none', fontWeight: 'bold', py: 1.2, bgcolor: CORAL, '&:hover': { bgcolor: '#C96A59' } }}
+                  sx={{ 
+                    flex: 2, 
+                    borderRadius: '24px', 
+                    textTransform: 'none', 
+                    fontWeight: '700', 
+                    py: 1.4, 
+                    bgcolor: CORAL, 
+                    '&:hover': { bgcolor: '#C96A59' },
+                    boxShadow: '0 4px 14px rgba(224, 123, 106, 0.25)'
+                  }}
                 >
                   {isCompleted ? 'View Quiz (Done)' : 'Take Quiz 📝'}
                 </Button>
@@ -257,33 +293,44 @@ export default function LessonViewer() {
           <Box>
             {/* Already completed notice */}
             {isCompleted && completionData && !quizSubmitted && (
-              <Paper elevation={0} sx={{ p: 2, mb: 2, borderRadius: 3, bgcolor: '#E8F8F1', border: '1px solid #A7F3D0', display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              <Paper elevation={0} sx={{ p: 2.2, mb: 3, borderRadius: '16px', bgcolor: '#E8F8F1', border: '1px solid #A7F3D0', display: 'flex', alignItems: 'center', gap: 1.8 }}>
                 <CheckCircleIcon sx={{ color: '#27AE60' }} />
                 <Box>
-                  <Typography variant="body2" fontWeight="700" color="#065F46">Quiz already completed!</Typography>
-                  <Typography variant="caption" color="#065F46">
+                  <Typography variant="body2" fontWeight="800" color="#065F46">Quiz already completed!</Typography>
+                  <Typography variant="caption" color="#065F46" sx={{ fontWeight: '500' }}>
                     Your score: {completionData.score}/{completionData.total} ({completionData.percentage}%) — view only
                   </Typography>
                 </Box>
               </Paper>
             )}
 
-            <Typography variant="body1" fontWeight="800" color="#1a1a2e" sx={{ mb: 2 }}>
+            <Typography variant="h6" fontWeight="900" color="#1a1a2e" sx={{ mb: 2.5 }}>
               📝 Quiz — {lesson.title}
             </Typography>
 
             {lesson.quiz.map((q, qIdx) => (
-              <Paper key={qIdx} elevation={0} sx={{ p: 2.5, borderRadius: 3, mb: 2, border: '1px solid rgba(0,0,0,0.06)', bgcolor: '#fff' }}>
-                <Typography variant="body2" fontWeight="700" color="#1a1a2e" sx={{ mb: 1.5 }}>
+              <Paper 
+                key={qIdx} 
+                elevation={0} 
+                sx={{ 
+                  p: 3.5, 
+                  borderRadius: '24px', 
+                  mb: 3, 
+                  border: '1px solid rgba(0,0,0,0.04)', 
+                  bgcolor: '#fff',
+                  boxShadow: '0 8px 30px rgba(0,0,0,0.01)'
+                }}
+              >
+                <Typography variant="body2" fontWeight="800" color="#1a1a2e" sx={{ mb: 2, fontSize: '14.5px' }}>
                   {qIdx + 1}. {q.question}
                 </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                   {q.options.map((opt, optIdx) => {
                     const isSelected = selectedAnswers[qIdx] === optIdx;
                     const isCorrect = optIdx === q.correctIndex;
-                    let bgColor = '#F9FAFB';
-                    let borderColor = 'rgba(0,0,0,0.1)';
-                    let textColor = '#374151';
+                    let bgColor = '#F8FAFC';
+                    let borderColor = 'rgba(0,0,0,0.05)';
+                    let textColor = '#475569';
 
                     if (quizSubmitted) {
                       if (isCorrect) { bgColor = '#E8F8F1'; borderColor = '#27AE60'; textColor = '#065F46'; }
@@ -297,23 +344,28 @@ export default function LessonViewer() {
                         key={optIdx}
                         onClick={() => !isCompleted && handleSelectAnswer(qIdx, optIdx)}
                         sx={{
-                          p: 1.5, borderRadius: 2, border: `1.5px solid ${borderColor}`,
-                          bgcolor: bgColor, cursor: isCompleted ? 'default' : 'pointer',
-                          display: 'flex', alignItems: 'center', gap: 1.5,
-                          transition: 'all 0.15s ease',
+                          p: 1.8, 
+                          borderRadius: '12px', 
+                          border: `1.5px solid ${borderColor}`,
+                          bgcolor: bgColor, 
+                          cursor: isCompleted ? 'default' : 'pointer',
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          gap: 1.5,
+                          transition: 'all 0.2s ease-in-out',
                           '&:hover': !isCompleted && !quizSubmitted ? { borderColor: '#6366F1', bgcolor: '#EEF2FF' } : {}
                         }}
                       >
                         <Box sx={{
                           width: 22, height: 22, borderRadius: '50%', flexShrink: 0,
-                          bgcolor: isSelected ? (quizSubmitted ? (isCorrect ? '#27AE60' : CORAL) : '#6366F1') : '#E5E7EB',
+                          bgcolor: isSelected ? (quizSubmitted ? (isCorrect ? '#27AE60' : CORAL) : '#6366F1') : '#E2E8F0',
                           display: 'flex', alignItems: 'center', justifyContent: 'center'
                         }}>
                           {quizSubmitted && isCorrect && <CheckCircleIcon sx={{ fontSize: 14, color: '#fff' }} />}
                           {quizSubmitted && isSelected && !isCorrect && <CancelIcon sx={{ fontSize: 14, color: '#fff' }} />}
                           {!quizSubmitted && isSelected && <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#fff' }} />}
                         </Box>
-                        <Typography variant="body2" sx={{ color: textColor, fontWeight: isSelected || (quizSubmitted && isCorrect) ? 'bold' : 'normal' }}>
+                        <Typography variant="body2" sx={{ color: textColor, fontWeight: isSelected || (quizSubmitted && isCorrect) ? '700' : '500', fontSize: '13.5px' }}>
                           {opt}
                         </Typography>
                       </Box>
@@ -330,7 +382,16 @@ export default function LessonViewer() {
                 fullWidth
                 disabled={!allAnswered || saving}
                 onClick={handleSubmitQuiz}
-                sx={{ py: 1.5, borderRadius: 2.5, fontWeight: 'bold', textTransform: 'none', fontSize: '15px', bgcolor: '#1e3c72', '&:hover': { bgcolor: '#2a5298' } }}
+                sx={{ 
+                  py: 1.6, 
+                  borderRadius: '24px', 
+                  fontWeight: '700', 
+                  textTransform: 'none', 
+                  fontSize: '15px', 
+                  bgcolor: '#205E5E', 
+                  '&:hover': { bgcolor: '#164343' },
+                  boxShadow: '0 4px 14px rgba(32, 94, 94, 0.25)'
+                }}
               >
                 {saving ? <CircularProgress size={22} color="inherit" /> : `Submit Quiz (${Object.keys(selectedAnswers).length}/${lesson.quiz.length} answered)`}
               </Button>
@@ -338,7 +399,18 @@ export default function LessonViewer() {
 
             {/* Score Card */}
             {(quizSubmitted || isCompleted) && completionData && (
-              <Paper elevation={0} sx={{ p: 3, borderRadius: 3, textAlign: 'center', bgcolor: '#fff', border: '1px solid rgba(0,0,0,0.06)', mt: 1 }}>
+              <Paper 
+                elevation={0} 
+                sx={{ 
+                  p: 4, 
+                  borderRadius: '24px', 
+                  textAlign: 'center', 
+                  bgcolor: '#fff', 
+                  border: '1px solid rgba(0,0,0,0.04)', 
+                  mt: 1,
+                  boxShadow: '0 8px 30px rgba(0,0,0,0.01)'
+                }}
+              >
                 {(() => {
                   const pct = quizSubmitted
                     ? Math.round((quizScore / lesson.quiz.length) * 100)
@@ -347,17 +419,25 @@ export default function LessonViewer() {
                   const sc = quizSubmitted ? quizScore : completionData.score;
                   return (
                     <>
-                      <EmojiEventsIcon sx={{ fontSize: 40, color: '#F39C12', mb: 1 }} />
-                      <Typography variant="h4" fontWeight="900" sx={{ color: g.color, mb: 0.5 }}>{g.grade}</Typography>
-                      <Typography variant="body1" fontWeight="700" color="#1a1a2e" sx={{ mb: 0.5 }}>{g.msg}</Typography>
-                      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                      <EmojiEventsIcon sx={{ fontSize: 44, color: '#F39C12', mb: 1.5 }} />
+                      <Typography variant="h4" fontWeight="900" sx={{ color: g.color, mb: 0.8 }}>{g.grade}</Typography>
+                      <Typography variant="body1" fontWeight="800" color="#1a1a2e" sx={{ mb: 0.8 }}>{g.msg}</Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 3, fontWeight: '500' }}>
                         You scored {sc} out of {lesson.quiz.length} ({pct}%)
                       </Typography>
                       <Button
                         variant="contained"
                         fullWidth
                         onClick={() => navigate('/lessons')}
-                        sx={{ py: 1.2, borderRadius: 2.5, textTransform: 'none', fontWeight: 'bold', bgcolor: TEAL, '&:hover': { bgcolor: '#3a8a8a' } }}
+                        sx={{ 
+                          py: 1.4, 
+                          borderRadius: '24px', 
+                          textTransform: 'none', 
+                          fontWeight: '700', 
+                          bgcolor: TEAL, 
+                          '&:hover': { bgcolor: '#3a8a8a' },
+                          boxShadow: '0 4px 12px rgba(74, 155, 155, 0.25)'
+                        }}
                       >
                         Back to Lessons Library →
                       </Button>
@@ -371,7 +451,7 @@ export default function LessonViewer() {
               variant="text"
               startIcon={<ArrowBackIcon />}
               onClick={() => { setShowQuiz(false); setCurrentStep(totalSteps - 1); }}
-              sx={{ mt: 1.5, textTransform: 'none', color: 'text.secondary', display: 'block', mx: 'auto' }}
+              sx={{ mt: 2, textTransform: 'none', color: 'text.secondary', display: 'block', mx: 'auto', fontWeight: '700' }}
             >
               Back to last step
             </Button>

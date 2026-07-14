@@ -231,47 +231,59 @@ export default function Dashboard() {
   const lvl = levelColors[user?.level] || levelColors.beginner;
 
   return (
-    <Box sx={{ bgcolor: '#F7F9FC', minHeight: '100vh', pb: { xs: 12, md: 8 } }}>
+    <Box sx={{ bgcolor: '#F8FAFC', minHeight: '100vh', pb: { xs: 12, md: 8 } }}>
       {/* Hero Profile Banner Header */}
       <Box
         sx={{
-          background: `linear-gradient(135deg, ${TEAL} 0%, #2D7D7D 100%)`,
-          pt: { xs: 4, sm: 6 },
-          pb: { xs: 6, sm: 8 },
+          background: `linear-gradient(135deg, ${TEAL} 0%, #205E5E 100%)`,
+          pt: { xs: 5, sm: 7 },
+          pb: { xs: 7, sm: 9 },
           color: '#ffffff',
           position: 'relative',
           overflow: 'hidden',
-          mb: 4
+          borderRadius: { xs: '0 0 24px 24px', md: '0 0 32px 32px' },
+          boxShadow: '0 10px 30px rgba(74, 155, 155, 0.15)',
+          mb: 5
         }}
       >
-        <Box sx={{ position: 'absolute', top: -30, right: -30, width: 150, height: 150, borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.08)' }} />
-        <Box sx={{ position: 'absolute', bottom: -20, right: 60, width: 90, height: 90, borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.06)' }} />
+        {/* Dynamic mesh circles */}
+        <Box sx={{ position: 'absolute', top: -50, right: -50, width: 220, height: 220, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%)' }} />
+        <Box sx={{ position: 'absolute', bottom: -40, right: 100, width: 140, height: 140, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%)' }} />
+        <Box sx={{ position: 'absolute', top: 20, left: '30%', width: 180, height: 180, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%)', filter: 'blur(10px)' }} />
 
         <Container maxWidth="lg">
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} sm={8}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2.5, mb: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 2, sm: 3 }, mb: { xs: 2, sm: 0 } }}>
                 <Avatar
                   sx={{
-                    width: 64, height: 64,
-                    bgcolor: 'rgba(255,255,255,0.22)',
-                    fontWeight: '800',
-                    fontSize: '24px',
+                    width: { xs: 68, sm: 76 }, 
+                    height: { xs: 68, sm: 76 },
+                    bgcolor: 'rgba(255,255,255,0.18)',
+                    fontWeight: '900',
+                    fontSize: { xs: '24px', sm: '28px' },
                     color: '#fff',
-                    border: '3px solid rgba(255,255,255,0.4)'
+                    border: '3px solid rgba(255,255,255,0.3)',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
                   }}
                 >
                   {(user?.name || 'U')[0].toUpperCase()}
                 </Avatar>
                 <Box>
-                  <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px' }}>Welcome back,</Typography>
-                  <Typography variant="h4" fontWeight="900" sx={{ lineHeight: 1.2 }}>
+                  <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.75)', fontSize: '13px', fontWeight: '500', letterSpacing: '0.5px' }}>Welcome back,</Typography>
+                  <Typography variant="h4" fontWeight="900" sx={{ lineHeight: 1.1, fontSize: { xs: '1.75rem', sm: '2.25rem' }, textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
                     {user?.name || 'Learner'}
                   </Typography>
                   <Chip
                     label={`${lvl.label} Level`}
                     size="small"
-                    sx={{ mt: 1, bgcolor: 'rgba(255,255,255,0.25)', color: '#fff', fontWeight: 'bold' }}
+                    sx={{ 
+                      mt: 1, 
+                      bgcolor: 'rgba(255,255,255,0.2)', 
+                      color: '#fff', 
+                      fontWeight: '700',
+                      border: '1px solid rgba(255,255,255,0.15)'
+                    }}
                   />
                 </Box>
               </Box>
@@ -281,16 +293,17 @@ export default function Dashboard() {
               <Paper 
                 elevation={0} 
                 sx={{ 
-                  p: 2, 
-                  borderRadius: 3, 
-                  bgcolor: 'rgba(255,255,255,0.12)', 
-                  backdropFilter: 'blur(10px)',
+                  p: 2.5, 
+                  borderRadius: 4, 
+                  bgcolor: 'rgba(255,255,255,0.1)', 
+                  backdropFilter: 'blur(20px)',
                   color: '#fff',
-                  border: '1px solid rgba(255,255,255,0.1)'
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.05)'
                 }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                  <Typography variant="caption" sx={{ fontWeight: 'bold', color: 'rgba(255,255,255,0.9)' }}>
+                  <Typography variant="caption" sx={{ fontWeight: '700', color: 'rgba(255,255,255,0.95)' }}>
                     Daily Goal Progress
                   </Typography>
                   <Typography variant="caption" sx={{ fontWeight: '900' }}>
@@ -310,7 +323,7 @@ export default function Dashboard() {
                     }
                   }}
                 />
-                <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)', mt: 0.8, display: 'block', fontSize: '11px' }}>
+                <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)', mt: 1, display: 'block', fontSize: '11px', fontWeight: '500' }}>
                   {conversationsDone}/{levelTarget} chat sessions completed
                 </Typography>
               </Paper>
@@ -322,7 +335,7 @@ export default function Dashboard() {
       {/* Main Content Grid */}
       <Container maxWidth="lg">
         {/* Core Stats Row */}
-        <Grid container spacing={2.5} sx={{ mb: 4 }}>
+        <Grid container spacing={2.5} sx={{ mb: 5 }}>
           {[
             { label: 'Day Streak', value: loadingStats ? '—' : (stats?.streak || 0), icon: <LocalFireDepartmentIcon sx={{ color: '#FF6B35', fontSize: 24 }} />, bg: '#FFF3ED' },
             { label: 'Conversations', value: loadingStats ? '—' : conversationsDone, icon: <AutoGraphIcon sx={{ color: TEAL, fontSize: 24 }} />, bg: TEAL_LIGHT },
@@ -334,22 +347,28 @@ export default function Dashboard() {
                 elevation={0} 
                 sx={{ 
                   p: 2.5, 
-                  borderRadius: '16px', 
+                  borderRadius: '20px', 
                   bgcolor: s.bg, 
                   textAlign: 'center', 
                   display: 'flex', 
                   flexDirection: 'column', 
                   alignItems: 'center',
-                  border: '1px solid rgba(0,0,0,0.03)'
+                  border: '1px solid rgba(0,0,0,0.02)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.01)',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 12px 24px rgba(0,0,0,0.04)'
+                  }
                 }}
               >
-                <Box sx={{ p: 1, borderRadius: '12px', bgcolor: 'rgba(255,255,255,0.6)', mb: 1, display: 'flex' }}>
+                <Box sx={{ p: 1.2, borderRadius: '14px', bgcolor: '#ffffff', mb: 1.5, display: 'flex', boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }}>
                   {s.icon}
                 </Box>
                 <Typography variant="h5" fontWeight="900" sx={{ lineHeight: 1.1, mt: 0.5, fontSize: '24px', color: '#1a1a2e' }}>
                   {s.value}
                 </Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ fontSize: '12px', fontWeight: '500' }}>
+                <Typography variant="caption" color="text.secondary" sx={{ fontSize: '12px', fontWeight: '600', mt: 0.5 }}>
                   {s.label}
                 </Typography>
               </Paper>
@@ -365,15 +384,16 @@ export default function Dashboard() {
             <Paper 
               elevation={0}
               sx={{ 
-                borderRadius: '20px', 
+                borderRadius: '24px', 
                 overflow: 'hidden', 
-                border: '1px solid rgba(0,0,0,0.05)',
+                border: '1px solid rgba(0,0,0,0.04)',
                 bgcolor: '#fff',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.02)',
                 mb: 4
               }}
             >
               {/* Tool Navigation Tabs */}
-              <Box sx={{ borderBottom: 1, borderColor: 'divider', bgcolor: '#F8FAFC' }}>
+              <Box sx={{ borderBottom: 1, borderColor: 'rgba(0,0,0,0.06)', bgcolor: '#F8FAFC' }}>
                 <Tabs 
                   value={activeTab} 
                   onChange={handleTabChange} 
@@ -381,20 +401,51 @@ export default function Dashboard() {
                   scrollButtons="auto"
                   textColor="primary"
                   indicatorColor="primary"
-                  sx={{ px: 2 }}
+                  sx={{ 
+                    px: 2,
+                    '& .MuiTab-root': {
+                      py: 2.2,
+                      fontWeight: '700',
+                      textTransform: 'none',
+                      fontSize: '14.5px',
+                      color: '#64748B',
+                      transition: 'all 0.2s',
+                      '&:hover': {
+                        color: TEAL
+                      }
+                    },
+                    '& .Mui-selected': {
+                      color: `${TEAL} !important`
+                    },
+                    '& .MuiTabs-indicator': {
+                      height: '3px',
+                      borderRadius: '3px 3px 0 0',
+                      bgcolor: TEAL
+                    }
+                  }}
                 >
-                  <Tab label="🌅 Daily Warm-up" sx={{ py: 2, fontWeight: '700', textTransform: 'none' }} />
-                  <Tab label="🎙️ Pronunciation Coach" sx={{ py: 2, fontWeight: '700', textTransform: 'none' }} />
-                  <Tab label="✍️ Grammar Checker" sx={{ py: 2, fontWeight: '700', textTransform: 'none' }} />
+                  <Tab label="🌅 Daily Warm-up" />
+                  <Tab label="🎙️ Pronunciation Coach" />
+                  <Tab label="✍️ Grammar Checker" />
                 </Tabs>
               </Box>
 
               {/* Tab 0: Daily English Warm-up */}
               {activeTab === 0 && (
-                <Box sx={{ p: { xs: 2.5, sm: 4 } }}>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2, flexWrap: 'wrap', gap: 1.5 }}>
-                    <Typography variant="h6" fontWeight="800">Today's Writing Prompt</Typography>
-                    <Button variant="text" size="small" onClick={handleNextWarmup} sx={{ fontWeight: 'bold' }}>
+                <Box sx={{ p: { xs: 3, sm: 4 } }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2.5, flexWrap: 'wrap', gap: 1.5 }}>
+                    <Typography variant="h6" fontWeight="900" sx={{ color: '#1a1a2e' }}>Today's Writing Prompt</Typography>
+                    <Button 
+                      variant="text" 
+                      size="small" 
+                      onClick={handleNextWarmup} 
+                      sx={{ 
+                        fontWeight: '700', 
+                        color: TEAL,
+                        borderRadius: '12px',
+                        '&:hover': { bgcolor: 'rgba(74, 155, 155, 0.06)' }
+                      }}
+                    >
                       Change Prompt 🔄
                     </Button>
                   </Box>
@@ -402,14 +453,14 @@ export default function Dashboard() {
                   <Paper 
                     elevation={0} 
                     sx={{ 
-                      p: 2, 
-                      bgcolor: '#F8FAFC', 
-                      borderRadius: '12px', 
+                      p: 2.5, 
+                      bgcolor: 'rgba(74, 155, 155, 0.04)', 
+                      borderRadius: '16px', 
                       borderLeft: `4px solid ${TEAL}`,
                       mb: 3 
                     }}
                   >
-                    <Typography variant="body1" fontWeight="600" color="text.primary">
+                    <Typography variant="body1" fontWeight="600" color="text.primary" sx={{ fontSize: '15px', lineHeight: 1.5 }}>
                       "{warmupPrompt}"
                     </Typography>
                   </Paper>
@@ -422,8 +473,14 @@ export default function Dashboard() {
                     onChange={(e) => setWarmupInput(e.target.value)}
                     placeholder="Type or speak your response in English..."
                     disabled={checkingWarmup}
-                    InputProps={{
-                      sx: { borderRadius: '12px' }
+                    slotProps={{
+                      input: {
+                        sx: { 
+                          borderRadius: '16px',
+                          bgcolor: '#FAFBFC',
+                          '&:hover': { bgcolor: '#F4F5F7' }
+                        }
+                      }
                     }}
                   />
 
@@ -434,7 +491,15 @@ export default function Dashboard() {
                       onClick={startWarmupVoice}
                       startIcon={isWarmupRecording ? <StopIcon /> : <MicIcon />}
                       disabled={checkingWarmup}
-                      sx={{ borderRadius: '24px' }}
+                      sx={{ 
+                        borderRadius: '24px',
+                        px: 3,
+                        py: 1,
+                        fontWeight: '700',
+                        textTransform: 'none',
+                        borderWidth: '1.5px',
+                        '&:hover': { borderWidth: '1.5px' }
+                      }}
                     >
                       {isWarmupRecording ? 'Listening...' : 'Voice Dictate'}
                     </Button>
@@ -444,6 +509,13 @@ export default function Dashboard() {
                       onClick={handleCheckWarmup}
                       disabled={checkingWarmup || !warmupInput}
                       startIcon={checkingWarmup ? <CircularProgress size={18} color="inherit" /> : <AutoFixHighIcon />}
+                      sx={{
+                        borderRadius: '24px',
+                        px: 3.5,
+                        py: 1.1,
+                        fontWeight: '700',
+                        boxShadow: '0 4px 12px rgba(74, 155, 155, 0.2)'
+                      }}
                     >
                       Analyze Warm-up
                     </Button>
@@ -452,9 +524,19 @@ export default function Dashboard() {
                   {warmupFeedback && (
                     <Box sx={{ mt: 4 }}>
                       <Divider sx={{ mb: 3 }} />
-                      <Typography variant="subtitle2" fontWeight="800" sx={{ mb: 1.5 }}>Grammar Feedback</Typography>
+                      <Typography variant="subtitle2" fontWeight="800" sx={{ mb: 1.5, color: '#1a1a2e' }}>Grammar Feedback</Typography>
                       {warmupFeedback.isValid ? (
-                        <Alert icon={<CheckCircleOutlineIcon fontSize="inherit" />} severity="success" sx={{ borderRadius: '12px' }}>
+                        <Alert 
+                          icon={<CheckCircleOutlineIcon fontSize="inherit" />} 
+                          severity="success" 
+                          sx={{ 
+                            borderRadius: '16px',
+                            fontWeight: '600',
+                            bgcolor: '#E8F5E9',
+                            border: '1px solid #C8E6C9',
+                            color: '#2E7D32'
+                          }}
+                        >
                           Superb! No grammatical errors found. You expressed your thoughts correctly! 🎉
                         </Alert>
                       ) : (
@@ -464,20 +546,20 @@ export default function Dashboard() {
                               key={i} 
                               variant="outlined" 
                               sx={{ 
-                                p: 2, 
-                                bgcolor: '#FFFDE7', 
-                                borderColor: '#fff59d', 
-                                borderRadius: '12px',
+                                p: 2.5, 
+                                bgcolor: '#FFFDF0', 
+                                borderColor: '#FFE082', 
+                                borderRadius: '16px',
                                 display: 'flex',
                                 alignItems: 'flex-start',
-                                gap: 1.5 
+                                gap: 1.8 
                               }}
                             >
                               <InfoOutlinedIcon color="warning" sx={{ mt: 0.3 }} />
                               <Box>
-                                <Typography variant="body2" sx={{ mb: 0.5 }}>
-                                  Instead of <s>"{err.uncleanText}"</s>, try saying:{' '}
-                                  <strong style={{ color: TEAL }}>{err.replacements.join(', ')}</strong>
+                                <Typography variant="body2" sx={{ mb: 0.8, color: '#455A64', fontSize: '14px' }}>
+                                  Instead of <s style={{ color: '#D32F2F' }}>"{err.uncleanText}"</s>, try saying:{' '}
+                                  <strong style={{ color: TEAL, fontSize: '14.5px' }}>{err.replacements.join(', ')}</strong>
                                 </Typography>
                                 <Typography variant="caption" color="text.secondary" sx={{ display: 'block', fontStyle: 'italic' }}>
                                   {err.message}
@@ -494,28 +576,39 @@ export default function Dashboard() {
 
               {/* Tab 1: Interactive Pronunciation Coach */}
               {activeTab === 1 && (
-                <Box sx={{ p: { xs: 2.5, sm: 4 } }}>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2, flexWrap: 'wrap', gap: 1.5 }}>
-                    <Typography variant="h6" fontWeight="800">Pronunciation Practice</Typography>
-                    <Button variant="text" size="small" onClick={handleNextPronSentence} sx={{ fontWeight: 'bold' }}>
+                <Box sx={{ p: { xs: 3, sm: 4 } }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2.5, flexWrap: 'wrap', gap: 1.5 }}>
+                    <Typography variant="h6" fontWeight="900" sx={{ color: '#1a1a2e' }}>Pronunciation Practice</Typography>
+                    <Button 
+                      variant="text" 
+                      size="small" 
+                      onClick={handleNextPronSentence} 
+                      sx={{ 
+                        fontWeight: '700', 
+                        color: TEAL,
+                        borderRadius: '12px',
+                        '&:hover': { bgcolor: 'rgba(74, 155, 155, 0.06)' }
+                      }}
+                    >
                       Change Sentence 🔄
                     </Button>
                   </Box>
                   
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2, fontSize: '14px' }}>
                     Click the microphone button and read this sentence aloud:
                   </Typography>
 
                   <Paper 
                     elevation={0} 
                     sx={{ 
-                      p: 2.5, 
-                      bgcolor: '#F8FAFC', 
-                      borderRadius: '12px', 
+                      p: 3, 
+                      bgcolor: '#F0F4F8', 
+                      borderRadius: '16px', 
                       borderLeft: '4px solid #1976d2',
                       fontStyle: 'italic',
                       fontSize: '18px',
-                      fontWeight: '500',
+                      fontWeight: '600',
+                      color: '#1E293B',
                       mb: 3 
                     }}
                   >
@@ -528,46 +621,54 @@ export default function Dashboard() {
                       color={isPronRecording ? "error" : "primary"}
                       onClick={startPronunciationVoice}
                       startIcon={isPronRecording ? <StopIcon /> : <MicIcon />}
-                      sx={{ py: 1.6, px: 4, borderRadius: '24px', minWidth: '220px' }}
+                      sx={{ 
+                        py: 1.6, 
+                        px: 4.5, 
+                        borderRadius: '28px', 
+                        minWidth: '240px',
+                        fontWeight: '700',
+                        fontSize: '15px',
+                        boxShadow: '0 4px 15px rgba(25, 118, 210, 0.25)'
+                      }}
                     >
                       {isPronRecording ? 'Listening Closely...' : 'Read Aloud'}
                     </Button>
                   </Box>
 
                   {pronTranscription && (
-                    <Box sx={{ mt: 2, p: 2, bgcolor: '#ffffff', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.08)' }}>
-                      <Typography variant="caption" display="block" color="text.secondary">
-                        <strong>What we heard:</strong>
+                    <Box sx={{ mt: 2, p: 2.5, bgcolor: '#FAFBFC', borderRadius: '16px', border: '1px solid rgba(0,0,0,0.06)' }}>
+                      <Typography variant="caption" display="block" color="text.secondary" sx={{ fontWeight: '700', mb: 0.5 }}>
+                        What we heard:
                       </Typography>
-                      <Typography variant="body1">"{pronTranscription}"</Typography>
+                      <Typography variant="body1" sx={{ color: '#1E293B', fontStyle: 'italic' }}>"{pronTranscription}"</Typography>
                     </Box>
                   )}
 
                   {pronFeedback && (
                     <Box 
                       sx={{ 
-                        mt: 3, 
-                        p: 2.5, 
-                        borderRadius: '12px', 
+                        mt: 4, 
+                        p: 3, 
+                        borderRadius: '16px', 
                         bgcolor: pronFeedback.score >= 85 ? '#E8F5E9' : pronFeedback.score >= 60 ? '#FFFDE7' : '#FFEBEE',
                         borderLeft: `5px solid ${pronFeedback.score >= 85 ? '#2e7d32' : pronFeedback.score >= 60 ? '#fbc02d' : '#d32f2f'}`,
                         display: 'flex',
-                        gap: 2,
+                        gap: 2.5,
                         alignItems: 'center'
                       }}
                     >
-                      <CheckCircleOutlineIcon color={pronFeedback.score >= 85 ? "success" : "warning"} sx={{ fontSize: '32px' }} />
+                      <CheckCircleOutlineIcon color={pronFeedback.score >= 85 ? "success" : "warning"} sx={{ fontSize: '36px' }} />
                       <Box>
-                        <Typography variant="h6" fontWeight="800" color={pronFeedback.score >= 85 ? "success.main" : "text.primary"}>
-                          Accuracy: {pronFeedback.score}%
+                        <Typography variant="h6" fontWeight="900" color={pronFeedback.score >= 85 ? "success.main" : "text.primary"} sx={{ fontSize: '18px' }}>
+                          Accuracy Score: {pronFeedback.score}%
                         </Typography>
                         {pronFeedback.mispronouncedWords.length > 0 ? (
-                          <Typography variant="body2" color="error.main" sx={{ mt: 0.5 }}>
+                          <Typography variant="body2" color="error.main" sx={{ mt: 0.5, fontWeight: '500' }}>
                             Oops! Try practicing these words again:{' '}
-                            <strong>{pronFeedback.mispronouncedWords.join(', ')}</strong>
+                            <strong style={{ textDecoration: 'underline' }}>{pronFeedback.mispronouncedWords.join(', ')}</strong>
                           </Typography>
                         ) : (
-                          <Typography variant="body2" color="success.main" sx={{ mt: 0.5 }}>
+                          <Typography variant="body2" color="success.main" sx={{ mt: 0.5, fontWeight: '500' }}>
                             Perfect pronunciation! Excellent work! 🎉
                           </Typography>
                         )}
@@ -579,9 +680,9 @@ export default function Dashboard() {
 
               {/* Tab 2: Freeform Grammar Coach */}
               {activeTab === 2 && (
-                <Box sx={{ p: { xs: 2.5, sm: 4 } }}>
-                  <Typography variant="h6" fontWeight="800" sx={{ mb: 1 }}>Writing Grammar Checker</Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                <Box sx={{ p: { xs: 3, sm: 4 } }}>
+                  <Typography variant="h6" fontWeight="900" sx={{ mb: 1, color: '#1a1a2e' }}>Writing Grammar Checker</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 3, fontSize: '14px' }}>
                     Paste a draft email, sentence, or article to analyze structural mistakes and receive suggestions.
                   </Typography>
 
@@ -593,8 +694,14 @@ export default function Dashboard() {
                     onChange={(e) => setGrammarInput(e.target.value)}
                     placeholder="Enter your paragraph here..."
                     disabled={checkingGrammar}
-                    InputProps={{
-                      sx: { borderRadius: '12px' }
+                    slotProps={{
+                      input: {
+                        sx: { 
+                          borderRadius: '16px',
+                          bgcolor: '#FAFBFC',
+                          '&:hover': { bgcolor: '#F4F5F7' }
+                        }
+                      }
                     }}
                   />
 
@@ -603,6 +710,12 @@ export default function Dashboard() {
                       variant="outlined" 
                       onClick={handleResetFreeform} 
                       disabled={checkingGrammar}
+                      sx={{ 
+                        borderRadius: '24px',
+                        px: 3,
+                        fontWeight: '700',
+                        textTransform: 'none'
+                      }}
                     >
                       Clear
                     </Button>
@@ -611,6 +724,13 @@ export default function Dashboard() {
                       onClick={handleCheckFreeformGrammar}
                       disabled={checkingGrammar || !grammarInput}
                       startIcon={checkingGrammar ? <CircularProgress size={18} color="inherit" /> : <AutoFixHighIcon />}
+                      sx={{ 
+                        borderRadius: '24px',
+                        px: 3.5,
+                        fontWeight: '700',
+                        textTransform: 'none',
+                        boxShadow: '0 4px 12px rgba(74, 155, 155, 0.2)'
+                      }}
                     >
                       Analyze Writing
                     </Button>
@@ -619,9 +739,18 @@ export default function Dashboard() {
                   {grammarFeedback && (
                     <Box sx={{ mt: 4 }}>
                       <Divider sx={{ mb: 3 }} />
-                      <Typography variant="subtitle2" fontWeight="800" sx={{ mb: 1.5 }}>Correction Details</Typography>
+                      <Typography variant="subtitle2" fontWeight="800" sx={{ mb: 1.5, color: '#1a1a2e' }}>Correction Details</Typography>
                       {grammarFeedback.isValid ? (
-                        <Alert severity="success" sx={{ borderRadius: '12px' }}>
+                        <Alert 
+                          severity="success" 
+                          sx={{ 
+                            borderRadius: '16px',
+                            fontWeight: '600',
+                            bgcolor: '#E8F5E9',
+                            border: '1px solid #C8E6C9',
+                            color: '#2E7D32'
+                          }}
+                        >
                           Everything looks great! No spelling or grammatical mistakes were detected in this paragraph. 🎉
                         </Alert>
                       ) : (
@@ -632,21 +761,21 @@ export default function Dashboard() {
                               variant="outlined" 
                               sx={{ 
                                 p: 2.5, 
-                                bgcolor: '#FFFDE7', 
-                                borderColor: '#fff59d', 
-                                borderRadius: '12px',
+                                bgcolor: '#FFFDF0', 
+                                borderColor: '#FFE082', 
+                                borderRadius: '16px',
                                 display: 'flex',
                                 alignItems: 'flex-start',
-                                gap: 1.5 
+                                gap: 1.8 
                               }}
                             >
                               <InfoOutlinedIcon color="warning" sx={{ mt: 0.3 }} />
                               <Box>
-                                <Typography variant="body2" sx={{ mb: 0.5 }}>
-                                  Mistake: <s style={{ color: 'red' }}>"{err.uncleanText}"</s> → Replace with:{' '}
-                                  <strong style={{ color: TEAL }}>{err.replacements.join(', ')}</strong>
+                                <Typography variant="body2" sx={{ mb: 0.8, color: '#455A64', fontSize: '14px' }}>
+                                  Mistake: <s style={{ color: '#D32F2F' }}>"{err.uncleanText}"</s> → Replace with:{' '}
+                                  <strong style={{ color: TEAL, fontSize: '14.5px' }}>{err.replacements.join(', ')}</strong>
                                 </Typography>
-                                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', fontStyle: 'italic' }}>
+                                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', fontStyle: 'italic', fontSize: '12px' }}>
                                   {err.message}
                                 </Typography>
                               </Box>
@@ -668,33 +797,38 @@ export default function Dashboard() {
             <Paper 
               elevation={0}
               sx={{ 
-                p: 3, 
-                borderRadius: '20px', 
-                border: '1px solid rgba(0,0,0,0.05)',
+                p: 3.5, 
+                borderRadius: '24px', 
+                border: '1px solid rgba(0,0,0,0.04)',
                 bgcolor: '#fff',
                 mb: 4,
                 textAlign: 'center',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.02)'
+                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.02)',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: '0 16px 32px rgba(0,0,0,0.05)'
+                }
               }}
             >
               <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
                 <Avatar 
                   sx={{ 
-                    width: 72, 
-                    height: 72, 
+                    width: 76, 
+                    height: 76, 
                     bgcolor: CORAL_LIGHT, 
                     color: CORAL,
-                    border: `3px solid ${CORAL_LIGHT}`,
-                    boxShadow: '0 4px 10px rgba(0,0,0,0.05)'
+                    border: `3px solid #FFF`,
+                    boxShadow: '0 8px 20px rgba(224,123,106,0.18)'
                   }}
                 >
-                  <ForumIcon sx={{ fontSize: 36 }} />
+                  <ForumIcon sx={{ fontSize: 38 }} />
                 </Avatar>
               </Box>
-              <Typography variant="h6" fontWeight="900" sx={{ mb: 0.5 }}>
+              <Typography variant="h6" fontWeight="900" sx={{ mb: 0.5, color: '#1a1a2e' }}>
                 Chat with Luna AI
               </Typography>
-              <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 2.5 }}>
+              <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 2.5, fontWeight: '500' }}>
                 Online &middot; Adapts difficulty in real-time
               </Typography>
               <Button 
@@ -703,7 +837,12 @@ export default function Dashboard() {
                 fullWidth
                 onClick={() => navigate('/conversation')}
                 endIcon={<ArrowForwardIosIcon sx={{ fontSize: 12 }} />}
-                sx={{ py: 1.2 }}
+                sx={{ 
+                  py: 1.4,
+                  borderRadius: '24px',
+                  fontWeight: '700',
+                  boxShadow: '0 4px 14px rgba(224, 123, 106, 0.25)'
+                }}
               >
                 Launch Partner Chat
               </Button>
@@ -713,23 +852,28 @@ export default function Dashboard() {
             <Paper 
               elevation={0}
               sx={{ 
-                p: 3, 
-                borderRadius: '20px', 
-                border: '1px solid rgba(0,0,0,0.05)',
+                p: 3.5, 
+                borderRadius: '24px', 
+                border: '1px solid rgba(0,0,0,0.04)',
                 bgcolor: '#fff',
                 mb: 4,
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.02)'
+                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.02)',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: '0 16px 32px rgba(0,0,0,0.05)'
+                }
               }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2.5 }}>
-                <Box sx={{ p: 1, borderRadius: '12px', bgcolor: 'primary.light', display: 'flex', color: 'primary.main' }}>
+                <Box sx={{ p: 1.2, borderRadius: '12px', bgcolor: 'primary.light', display: 'flex', color: 'primary.main', boxShadow: '0 2px 8px rgba(74, 155, 155, 0.1)' }}>
                   <MenuBookIcon sx={{ fontSize: 24 }} />
                 </Box>
                 <Box sx={{ flexGrow: 1 }}>
-                  <Typography variant="subtitle2" fontWeight="800" sx={{ lineHeight: 1.2 }}>
+                  <Typography variant="subtitle2" fontWeight="800" sx={{ lineHeight: 1.2, color: '#1a1a2e' }}>
                     Structured Lessons
                   </Typography>
-                  <Typography variant="caption" color="text.secondary">
+                  <Typography variant="caption" color="text.secondary" sx={{ fontWeight: '500' }}>
                     Grammar, Vocab & Pronunciation
                   </Typography>
                 </Box>
@@ -737,15 +881,15 @@ export default function Dashboard() {
               
               <Box sx={{ mb: 2.5 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.8 }}>
-                  <Typography variant="caption" color="text.secondary" fontWeight="bold">Lessons Finished</Typography>
-                  <Typography variant="caption" fontWeight="bold">{lessonStats.completed}/{lessonStats.total}</Typography>
+                  <Typography variant="caption" color="text.secondary" fontWeight="700">Lessons Finished</Typography>
+                  <Typography variant="caption" fontWeight="900" color="primary">{lessonStats.completed}/{lessonStats.total}</Typography>
                 </Box>
                 <LinearProgress 
                   variant="determinate" 
                   value={lessonStats.total > 0 ? Math.round((lessonStats.completed / lessonStats.total) * 100) : 0} 
                   sx={{ 
-                    height: 6, 
-                    borderRadius: 3, 
+                    height: 8, 
+                    borderRadius: 4, 
                     bgcolor: 'primary.light', 
                     '& .MuiLinearProgress-bar': { bgcolor: TEAL } 
                   }} 
@@ -756,7 +900,13 @@ export default function Dashboard() {
                 variant="outlined" 
                 fullWidth
                 onClick={() => navigate('/lessons')}
-                sx={{ py: 1 }}
+                sx={{ 
+                  py: 1.2,
+                  borderRadius: '24px',
+                  fontWeight: '700',
+                  borderWidth: '1.5px',
+                  '&:hover': { borderWidth: '1.5px' }
+                }}
               >
                 Browse Syllabus
               </Button>
@@ -767,17 +917,33 @@ export default function Dashboard() {
               <Paper 
                 elevation={0}
                 sx={{ 
-                  p: 3, 
-                  borderRadius: '20px', 
-                  border: '1px solid rgba(0,0,0,0.05)',
+                  p: 3.5, 
+                  borderRadius: '24px', 
+                  border: '1px solid rgba(0,0,0,0.04)',
                   bgcolor: '#fff',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.02)'
+                  boxShadow: '0 8px 30px rgba(0, 0, 0, 0.02)',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 16px 32px rgba(0,0,0,0.05)'
+                  }
                 }}
               >
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                  <Typography variant="subtitle2" fontWeight="800">🏅 Unlocked Vocabulary</Typography>
-                  <Button variant="text" size="small" onClick={() => navigate('/progress')} sx={{ fontWeight: 'bold', minWidth: 0, p: 0 }}>
-                    All
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2.5 }}>
+                  <Typography variant="subtitle2" fontWeight="800" sx={{ color: '#1a1a2e' }}>🏅 Unlocked Vocabulary</Typography>
+                  <Button 
+                    variant="text" 
+                    size="small" 
+                    onClick={() => navigate('/progress')} 
+                    sx={{ 
+                      fontWeight: '800', 
+                      minWidth: 0, 
+                      p: 0,
+                      color: TEAL,
+                      '&:hover': { bgcolor: 'transparent', opacity: 0.8 }
+                    }}
+                  >
+                    View All
                   </Button>
                 </Box>
                 <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
@@ -791,7 +957,9 @@ export default function Dashboard() {
                         color: TEAL, 
                         fontWeight: '700', 
                         fontSize: '11px',
-                        borderRadius: '6px'
+                        borderRadius: '8px',
+                        py: 1.5,
+                        px: 0.5
                       }} 
                     />
                   ))}
@@ -799,7 +967,13 @@ export default function Dashboard() {
                     <Chip 
                       label={`+${stats.uniqueVocabulary.length - 8} more`} 
                       size="small" 
-                      sx={{ bgcolor: '#f1f5f9', color: 'text.secondary', fontSize: '11px', borderRadius: '6px' }} 
+                      sx={{ 
+                        bgcolor: '#F1F5F9', 
+                        color: '#64748B', 
+                        fontSize: '11px', 
+                        borderRadius: '8px',
+                        fontWeight: '700'
+                      }} 
                     />
                   )}
                 </Box>

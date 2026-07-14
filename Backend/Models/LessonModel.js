@@ -35,7 +35,10 @@ const LessonSchema = new mongoose.Schema({
     // unlockAfter: minimum beginner completions required (0 = always unlocked)
     unlockAfter: { type: Number, default: 0 },
     steps: [LessonStepSchema],
-    quiz: [QuizQuestionSchema]
+    quiz: [QuizQuestionSchema],
+    // Track which admin created this lesson
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
+    createdByName: { type: String, default: 'System' }
 }, { timestamps: true });
 
 const LessonModel = mongoose.model('lessons', LessonSchema);

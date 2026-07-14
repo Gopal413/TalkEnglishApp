@@ -23,16 +23,17 @@ export default function GrammarFeedback() {
     <Paper 
       variant="outlined" 
       sx={{ 
-        p: 2, 
-        mb: 2, 
-        bgcolor: '#fffde7',     // Soft educational yellow background
-        borderColor: '#fff59d', // Mild warning border color
-        borderRadius: 3 
+        p: 2.5, 
+        mb: 2.5, 
+        bgcolor: '#FFFDF0',     // Soft educational yellow background
+        borderColor: '#FFE082', // Mild warning border color
+        borderRadius: '16px',
+        boxShadow: '0 4px 14px rgba(255, 224, 130, 0.15)'
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
         <InfoOutlinedIcon fontSize="small" color="warning" />
-        <Typography variant="caption" fontWeight="bold" color="warning.main">
+        <Typography variant="caption" fontWeight="800" color="warning.main" sx={{ letterSpacing: '0.5px' }}>
           GENTLE ENGLISH TIP:
         </Typography>
       </Box>
@@ -40,9 +41,9 @@ export default function GrammarFeedback() {
       {latestErrors.map((err, i) => {
         const replacementText = err.replacements && err.replacements[0];
         return (
-          <Box key={i} sx={{ mb: 1.5, '&:last-child': { mb: 0 } }}>
-            <Typography variant="caption" display="block" color="text.primary" sx={{ mb: 1 }}>
-              Instead of <s>"{err.uncleanText}"</s>, try saying: <strong>{err.replacements.join(', ')}</strong> — <em>{err.message}</em>
+          <Box key={i} sx={{ mb: 2, '&:last-child': { mb: 0 } }}>
+            <Typography variant="caption" display="block" color="text.primary" sx={{ mb: 1.2, lineHeight: 1.5, fontSize: '12px' }}>
+              Instead of <s style={{ color: '#D32F2F' }}>"{err.uncleanText}"</s>, try saying: <strong>{err.replacements.join(', ')}</strong> — <span style={{ fontStyle: 'italic', color: '#64748B' }}>{err.message}</span>
             </Typography>
             {replacementText && (
               <Button
@@ -50,8 +51,17 @@ export default function GrammarFeedback() {
                 size="small"
                 color="primary"
                 onClick={() => handlePracticeSentence(replacementText)}
-                startIcon={<MicIcon sx={{ fontSize: 14 }} />}
-                sx={{ textTransform: 'none', fontSize: '11px', borderRadius: 2, py: 0.3 }}
+                startIcon={<MicIcon sx={{ fontSize: 13 }} />}
+                sx={{ 
+                  textTransform: 'none', 
+                  fontSize: '11px', 
+                  borderRadius: '24px', 
+                  px: 2,
+                  py: 0.6,
+                  fontWeight: '700',
+                  borderWidth: '1px',
+                  '&:hover': { borderWidth: '1px' }
+                }}
               >
                 Practice Saying "{replacementText}"
               </Button>

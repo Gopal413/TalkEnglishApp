@@ -263,8 +263,8 @@ export default function LandingPage() {
                                     value={demoInput}
                                     onChange={(e) => setDemoInput(e.target.value)}
                                     placeholder="Write something in English..."
-                                    InputProps={{
-                                        sx: { bgcolor: '#fff', borderRadius: '12px' }
+                                    slotProps={{
+                                        input: { sx: { bgcolor: '#fff', borderRadius: '12px' } }
                                     }}
                                 />
                             </Grid>

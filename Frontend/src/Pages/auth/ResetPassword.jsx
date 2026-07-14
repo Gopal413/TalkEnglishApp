@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Box, TextField, Button, CircularProgress, Grid } from '@mui/material';
 import { resetPassword } from '../../api/authApi';
 import { useSnackbar } from '../../context/SnackbarContext';
@@ -7,6 +7,8 @@ import AuthLayout from './AuthLayout';
 
 function ResetPassword() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const email = location.state?.userEmail;
     const { showSnackbar } = useSnackbar();
 
     const [password, setPassword] = useState('');
@@ -32,7 +34,7 @@ function ResetPassword() {
         setLoading(true);
 
         try {
-            await resetPassword(password);
+            await resetPassword(password, email);
             showSnackbar('Password has been updated successfully. You may now log in.', 'success');
             navigate('/login'); 
         } catch (err) {

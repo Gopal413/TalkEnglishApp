@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/',
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/',
     // 1. COOKIE ACCEPT: This forces the browser to send HTTP-Only cookies automatically
     withCredentials: true, 
     headers: {

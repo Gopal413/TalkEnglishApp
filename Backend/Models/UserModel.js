@@ -38,6 +38,19 @@ const UserSchema = new mongoose.Schema({
         required: true 
     },
     
+    // ==========================================
+    // 🔑 ROLE-BASED ACCESS CONTROL
+    // ==========================================
+    role: {
+        type: String,
+        enum: ['user', 'admin', 'superadmin'],
+        default: 'user'
+    },
+    isActive: {
+        type: Boolean,
+        default: true  // false = account disabled (cannot login)
+    },
+
     // OTP Handshake Flags
     isVerified: { 
         type: Boolean, 

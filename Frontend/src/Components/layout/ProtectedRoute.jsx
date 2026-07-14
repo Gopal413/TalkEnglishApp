@@ -21,12 +21,24 @@ function ProtectedRoute({ children, allowAdminOnly = false }) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    // 3. Guard: If route is admin-only, and user is a standard role, block access
+    const { user } = useAuth();
+
+    // 3. Redirect Admin/SuperAdmin accessing regular student views (if page is not admin-only)
+    if (!allowAdminOnly) {
+        if (user?.role === 'superadmin') {
+            return <Navigate to="/superadmin" replace />;
+        }
+        if (user?.role === 'admin') {
+            return <Navigate to="/admin" replace />;
+        }
+    }
+
+    // 4. Guard: If route is admin-only, and user is a standard role, block access
     if (allowAdminOnly && !isAdmin) {
         return <Navigate to="/dashboard" replace />;
     }
 
-    // 4. Authorization Clear: Render the private view component cleanly
+    // 5. Authorization Clear: Render the private view component cleanly
     return children;
 }
 

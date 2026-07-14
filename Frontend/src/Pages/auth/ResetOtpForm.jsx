@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Box, TextField, Button, CircularProgress, Alert } from '@mui/material';
 import { verifyResetOtp } from '../../api/authApi';
 import AuthLayout from './AuthLayout';
 
 function ResetOtpForm() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const email = location.state?.userEmail;
+
     const [otp, setOtp] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -22,8 +25,8 @@ function ResetOtpForm() {
         setError('');
 
         try {
-            await verifyResetOtp(otp);
-            navigate('/reset-password');
+            await verifyResetOtp(otp, email);
+            navigate('/reset-password', { state: { userEmail: email } });
         } catch (err) {
             setError(err.response?.data?.error || 'Invalid or expired OTP code.');
         } finally {

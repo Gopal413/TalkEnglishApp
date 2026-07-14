@@ -19,7 +19,7 @@ import {
   FormControlLabel,
   Chip,
   Alert,
-  Tooltip
+  Tooltip,Avatar 
 } from '@mui/material';
 import MicIcon from '@mui/icons-material/Mic';
 import StopIcon from '@mui/icons-material/Stop';
@@ -406,37 +406,68 @@ export default function AiChat() {
   });
 
   return (
-    <Box sx={{ bgcolor: '#F7F9FC', minHeight: '100vh', pb: 10 }}>
-    <Container maxWidth="lg" sx={{ pt: { xs: 2, md: 4 }, pb: 10, px: { xs: 2, sm: 3 } }}>
+    <Box sx={{ bgcolor: '#F8FAFC', minHeight: '100vh', pb: 10 }}>
+    <Container maxWidth="lg" sx={{ pt: { xs: 2, md: 4 }, pb: 10, px: { xs: 2.5, sm: 3 } }}>
       {/* CASE A: Parameter selection panel */}
       {!conversationId && !sessionSummary && (
         <Box>
-          <Paper elevation={3} sx={{ p: { xs: 2.5, sm: 4 }, borderRadius: 4, mb: 4, background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)', color: '#fff', textAlign: 'center' }}>
-            <Typography variant="h5" fontWeight="800" gutterBottom sx={{ fontSize: { xs: '20px', sm: '28px', md: '32px' } }}>🗣️ AI English Conversation Partner</Typography>
-            <Typography variant="body2" sx={{ opacity: 0.9, maxWidth: '600px', mx: 'auto', mb: 2, display: { xs: 'none', sm: 'block' } }}>
-              Speak naturally, challenge yourself with real-world missions, and watch your fluency level adapt in real-time. Completely free.
+          <Paper 
+            elevation={0} 
+            sx={{ 
+              p: { xs: 3, sm: 5 }, 
+              borderRadius: '24px', 
+              mb: 4, 
+              background: `linear-gradient(135deg, ${TEAL} 0%, #205E5E 100%)`, 
+              color: '#fff', 
+              textAlign: 'center',
+              boxShadow: '0 8px 30px rgba(74, 155, 155, 0.15)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+          >
+            <Box sx={{ position: 'absolute', top: -50, right: -50, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)' }} />
+            <Typography variant="h4" fontWeight="900" gutterBottom sx={{ fontSize: { xs: '22px', sm: '30px', md: '34px' }, textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>🗣️ AI English Conversation Partner</Typography>
+            <Typography variant="body2" sx={{ opacity: 0.9, maxWidth: '600px', mx: 'auto', mb: 1, display: { xs: 'none', sm: 'block' }, lineHeight: 1.6, fontSize: '15px' }}>
+              Speak naturally, challenge yourself with real-world scenarios, and watch your fluency level adapt in real-time. Completely free.
             </Typography>
           </Paper>
 
           {/* Difficulty Configuration Grid */}
-          <Grid container spacing={{ xs: 2, md: 3 }} sx={{ mb: 4 }}>
+          <Grid container spacing={{ xs: 3, md: 4 }} sx={{ mb: 5 }}>
             <Grid item xs={12} md={6}>
-              <Paper elevation={2} sx={{ p: 3, borderRadius: 3, height: '100%' }}>
-                <Typography variant="h6" fontWeight="bold" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Paper 
+                elevation={0} 
+                sx={{ 
+                  p: 3.5, 
+                  borderRadius: '20px', 
+                  height: '100%',
+                  border: '1px solid rgba(0,0,0,0.04)',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.01)'
+                }}
+              >
+                <Typography variant="h6" fontWeight="800" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#1a1a2e' }}>
                   <StarsIcon color="primary" /> Adjust Speaking Fluency
                 </Typography>
-                <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 2 }}>
+                <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 2.5, fontSize: '12px' }}>
                   Set your initial comfort zone. Luna will scale up/down matching your pacing.
                 </Typography>
 
-                <Box sx={{ display: 'flex', gap: 1.5, mb: 3 }}>
+                <Box sx={{ display: 'flex', gap: 1.5, mb: 3.5 }}>
                   {['beginner', 'intermediate', 'advanced'].map((lvl) => (
                     <Button
                       key={lvl}
                       variant={level === lvl ? 'contained' : 'outlined'}
                       color={lvl === 'beginner' ? 'success' : lvl === 'intermediate' ? 'warning' : 'error'}
                       onClick={() => setLevel(lvl)}
-                      sx={{ flex: 1, py: 1.2, textTransform: 'capitalize', fontWeight: 'bold', borderRadius: 2 }}
+                      sx={{ 
+                        flex: 1, 
+                        py: 1.2, 
+                        textTransform: 'capitalize', 
+                        fontWeight: '700', 
+                        borderRadius: '12px',
+                        borderWidth: '1.5px',
+                        '&:hover': { borderWidth: '1.5px' }
+                      }}
                     >
                       {lvl}
                     </Button>
@@ -452,11 +483,11 @@ export default function AiChat() {
                     />
                   }
                   label={
-                    <Box>
-                      <Typography variant="body2" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                    <Box sx={{ ml: 0.5 }}>
+                      <Typography variant="body2" fontWeight="700" sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#1a1a2e' }}>
                         Auto-Adapt Difficulty <PsychologyIcon sx={{ fontSize: 18 }} color="action" />
                       </Typography>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography variant="caption" color="text.secondary" sx={{ fontSize: '11px' }}>
                         Luna dynamically changes vocabulary size and pacing based on your performance.
                       </Typography>
                     </Box>
@@ -467,15 +498,24 @@ export default function AiChat() {
 
             {/* Custom Scenario Form */}
             <Grid item xs={12} md={6}>
-              <Paper elevation={2} sx={{ p: 3, borderRadius: 3, height: '100%' }}>
-                <Typography variant="h6" fontWeight="bold" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Paper 
+                elevation={0} 
+                sx={{ 
+                  p: 3.5, 
+                  borderRadius: '20px', 
+                  height: '100%',
+                  border: '1px solid rgba(0,0,0,0.04)',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.01)'
+                }}
+              >
+                <Typography variant="h6" fontWeight="800" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#1a1a2e' }}>
                   <ForumIcon color="primary" /> Custom / Free Talk
                 </Typography>
-                <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 2 }}>
+                <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 2.5, fontSize: '12px' }}>
                   Choose to practice without a rigid topic structure or create your own target.
                 </Typography>
 
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
                   <Button 
                     variant="contained" 
                     color="primary" 
@@ -485,14 +525,20 @@ export default function AiChat() {
                       setMode('freeTalk');
                       handleStartSession();
                     }}
-                    sx={{ py: 1.5, fontWeight: 'bold', borderRadius: 2, textTransform: 'none' }}
+                    sx={{ 
+                      py: 1.5, 
+                      fontWeight: '700', 
+                      borderRadius: '24px', 
+                      textTransform: 'none',
+                      boxShadow: '0 4px 14px rgba(74, 155, 155, 0.2)'
+                    }}
                   >
                     🗣️ Speak Freely (No Target Scenario)
                   </Button>
 
-                  <Box sx={{ borderTop: '1px solid #eee', pt: 2 }}>
-                    <Typography variant="body2" fontWeight="bold" sx={{ mb: 1 }}>Or create a custom topic:</Typography>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Box sx={{ borderTop: '1px solid rgba(0,0,0,0.06)', pt: 2.5 }}>
+                    <Typography variant="body2" fontWeight="700" sx={{ mb: 1.5, color: '#1a1a2e' }}>Or create a custom topic:</Typography>
+                    <Box sx={{ display: 'flex', gap: 1.5 }}>
                       <TextField 
                         fullWidth 
                         size="small" 
@@ -501,6 +547,9 @@ export default function AiChat() {
                         onChange={(e) => {
                           setTopic(e.target.value);
                           setMode('rolePlay');
+                        }}
+                        slotProps={{
+                          input: { sx: { borderRadius: '12px' } }
                         }}
                       />
                       <Button 
@@ -512,6 +561,13 @@ export default function AiChat() {
                           handleStartSession();
                         }}
                         disabled={!topic.trim() || topic === 'General Conversation'}
+                        sx={{
+                          borderRadius: '12px',
+                          fontWeight: '700',
+                          borderWidth: '1.5px',
+                          px: 3,
+                          '&:hover': { borderWidth: '1.5px' }
+                        }}
                       >
                         Start
                       </Button>
@@ -523,35 +579,86 @@ export default function AiChat() {
           </Grid>
 
           {/* Scenario Cards Picker */}
-          <Typography variant="h5" fontWeight="800" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography variant="h5" fontWeight="900" sx={{ mb: 2.5, display: 'flex', alignItems: 'center', gap: 1, color: '#1a1a2e' }}>
             🎯 Practice Scenarios
           </Typography>
 
-          <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
-            <Tabs value={activeTab} onChange={(e, val) => setActiveTab(val)} aria-label="scenario categories" variant="scrollable" scrollButtons="auto" allowScrollButtonsMobile>
-              <Tab label="All" sx={{ textTransform: 'none', fontWeight: 'bold', minWidth: { xs: 60, sm: 'auto' }, fontSize: { xs: '12px', sm: '14px' } }} />
-              <Tab label="Travel ✈️" sx={{ textTransform: 'none', fontWeight: 'bold', minWidth: { xs: 70, sm: 'auto' }, fontSize: { xs: '12px', sm: '14px' } }} />
-              <Tab label="Business 👔" sx={{ textTransform: 'none', fontWeight: 'bold', minWidth: { xs: 80, sm: 'auto' }, fontSize: { xs: '12px', sm: '14px' } }} />
-              <Tab label="Daily ☕" sx={{ textTransform: 'none', fontWeight: 'bold', minWidth: { xs: 65, sm: 'auto' }, fontSize: { xs: '12px', sm: '14px' } }} />
+          <Box sx={{ borderBottom: 1, borderColor: 'rgba(0,0,0,0.06)', mb: 4, bgcolor: '#fff', borderRadius: '12px 12px 0 0', px: 1 }}>
+            <Tabs 
+              value={activeTab} 
+              onChange={(e, val) => setActiveTab(val)} 
+              aria-label="scenario categories" 
+              variant="scrollable" 
+              scrollButtons="auto" 
+              allowScrollButtonsMobile
+              sx={{
+                '& .MuiTab-root': {
+                  textTransform: 'none',
+                  fontWeight: '700',
+                  color: '#64748B',
+                  fontSize: { xs: '13px', sm: '14.5px' },
+                  py: 2,
+                  minWidth: { xs: 70, sm: 'auto' }
+                },
+                '& .Mui-selected': {
+                  color: `${TEAL} !important`
+                },
+                '& .MuiTabs-indicator': {
+                  height: '3px',
+                  borderRadius: '3px 3px 0 0',
+                  bgcolor: 'teal'
+                }
+              }}
+            >
+              <Tab label="All" />
+              <Tab label="Travel ✈️" />
+              <Tab label="Business 👔" />
+              <Tab label="Daily ☕" />
             </Tabs>
           </Box>
 
-          <Grid container spacing={{ xs: 1.5, sm: 2.5 }}>
+          <Grid container spacing={{ xs: 2.5, sm: 3 }}>
             {filteredScenarios.map((scen) => (
               <Grid item xs={12} sm={6} key={scen.id}>
-                <Card sx={{ borderRadius: 3, border: '1px solid #eef2f6', boxShadow: 'none', transition: '0.2s', '&:hover': { transform: 'translateY(-3px)', boxShadow: '0 8px 24px rgba(0,0,0,0.06)' } }}>
+                <Card 
+                  sx={{ 
+                    borderRadius: '20px', 
+                    border: '1px solid rgba(0,0,0,0.04)', 
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.01)', 
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
+                    '&:hover': { 
+                      transform: 'translateY(-4px)', 
+                      boxShadow: '0 12px 28px rgba(0,0,0,0.05)' 
+                    } 
+                  }}
+                >
                   <CardActionArea onClick={() => handleStartSession(scen)}>
-                    <CardContent sx={{ p: 3 }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
-                        {scen.icon}
-                        <Typography variant="h6" fontWeight="bold">{scen.name}</Typography>
+                    <CardContent sx={{ p: 3.5 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
+                        <Box sx={{ p: 1, borderRadius: '12px', bgcolor: 'primary.light', display: 'flex', color: 'primary.main' }}>
+                          {scen.icon}
+                        </Box>
+                        <Typography variant="h6" fontWeight="800" sx={{ color: '#1a1a2e', fontSize: '17px' }}>{scen.name}</Typography>
                       </Box>
-                      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5, lineHeight: 1.6, fontSize: '13.5px' }}>
                         {scen.description}
                       </Typography>
-                      <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+                      <Box sx={{ display: 'flex', gap: 0.8, flexWrap: 'wrap' }}>
                         {scen.targetVocabulary.map(vocab => (
-                          <Chip key={vocab} label={`#${vocab}`} size="small" variant="outlined" sx={{ fontSize: '11px' }} />
+                          <Chip 
+                            key={vocab} 
+                            label={`#${vocab}`} 
+                            size="small" 
+                            variant="outlined" 
+                            sx={{ 
+                              fontSize: '11px', 
+                              fontWeight: '700',
+                              color: 'teal',
+                              borderColor: `${TEAL}30`,
+                              bgcolor: `${TEAL}05`,
+                              borderRadius: '6px'
+                            }} 
+                          />
                         ))}
                       </Box>
                     </CardContent>
@@ -565,32 +672,56 @@ export default function AiChat() {
 
       {/* CASE B: Conversation session summary metrics report */}
       {sessionSummary && (
-        <Paper elevation={4} sx={{ p: { xs: 3, sm: 5 }, borderRadius: 4, textAlign: 'center', maxWidth: '600px', mx: 'auto', background: '#fcfdfe' }}>
-          <Typography variant="h4" fontWeight="800" color="success.main" gutterBottom>🎉 Practice Completed!</Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
+        <Paper 
+          elevation={0} 
+          sx={{ 
+            p: { xs: 4, sm: 6 }, 
+            borderRadius: '24px', 
+            textAlign: 'center', 
+            maxWidth: '600px', 
+            mx: 'auto', 
+            bgcolor: '#ffffff',
+            border: '1px solid rgba(0,0,0,0.04)',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.04)'
+          }}
+        >
+          <Typography variant="h4" fontWeight="900" color="success.main" gutterBottom sx={{ textShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>🎉 Practice Completed!</Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 4, fontSize: '15px', lineHeight: 1.6 }}>
             Fantastic efforts practicing your English today! Here is your conversational breakdown:
           </Typography>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, bgcolor: '#f5f7fa', p: 3, borderRadius: 3, textAlign: 'left', mb: 4 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed #ddd', pb: 1 }}>
-              <Typography variant="body2" color="text.secondary">Scenario Name:</Typography>
-              <Typography variant="body2" fontWeight="bold">{sessionSummary.topic}</Typography>
+          <Box 
+            sx={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: 2.2, 
+              bgcolor: '#F8FAFC', 
+              p: 3.5, 
+              borderRadius: '20px', 
+              textAlign: 'left', 
+              mb: 4,
+              border: '1px solid rgba(0,0,0,0.02)'
+            }}
+          >
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed rgba(0,0,0,0.1)', pb: 1.5 }}>
+              <Typography variant="body2" color="text.secondary" sx={{ fontWeight: '600' }}>Scenario Name:</Typography>
+              <Typography variant="body2" fontWeight="700" sx={{ color: '#1a1a2e' }}>{sessionSummary.topic}</Typography>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed #ddd', pb: 1 }}>
-              <Typography variant="body2" color="text.secondary">Session Mode:</Typography>
-              <Typography variant="body2" fontWeight="bold" sx={{ textTransform: 'capitalize' }}>{sessionSummary.mode}</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed rgba(0,0,0,0.1)', pb: 1.5 }}>
+              <Typography variant="body2" color="text.secondary" sx={{ fontWeight: '600' }}>Session Mode:</Typography>
+              <Typography variant="body2" fontWeight="700" sx={{ textTransform: 'capitalize', color: '#1a1a2e' }}>{sessionSummary.mode}</Typography>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed #ddd', pb: 1 }}>
-              <Typography variant="body2" color="text.secondary">Practice Time:</Typography>
-              <Typography variant="body2" fontWeight="bold">{sessionSummary.duration} seconds</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed rgba(0,0,0,0.1)', pb: 1.5 }}>
+              <Typography variant="body2" color="text.secondary" sx={{ fontWeight: '600' }}>Practice Time:</Typography>
+              <Typography variant="body2" fontWeight="700" sx={{ color: '#1a1a2e' }}>{sessionSummary.duration} seconds</Typography>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed #ddd', pb: 1 }}>
-              <Typography variant="body2" color="text.secondary">Total Conversational Rounds:</Typography>
-              <Typography variant="body2" fontWeight="bold">{sessionSummary.totalMessagesExchange} exchanges</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed rgba(0,0,0,0.1)', pb: 1.5 }}>
+              <Typography variant="body2" color="text.secondary" sx={{ fontWeight: '600' }}>Total Conversational Rounds:</Typography>
+              <Typography variant="body2" fontWeight="700" sx={{ color: '#1a1a2e' }}>{sessionSummary.totalMessagesExchange} exchanges</Typography>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Typography variant="body2" color="text.secondary">Approximate Score Accuracy:</Typography>
-              <Typography variant="body2" fontWeight="bold" color="success.main">{sessionSummary.overallScore}%</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', pt: 0.5 }}>
+              <Typography variant="body2" color="text.secondary" sx={{ fontWeight: '600' }}>Approximate Score Accuracy:</Typography>
+              <Typography variant="body2" fontWeight="800" color="success.main" sx={{ fontSize: '16px' }}>{sessionSummary.overallScore}%</Typography>
             </Box>
           </Box>
 
@@ -599,7 +730,13 @@ export default function AiChat() {
             size="large" 
             fullWidth 
             onClick={handleStartSession} 
-            sx={{ py: 1.5, borderRadius: 2.5, fontWeight: 'bold' }}
+            sx={{ 
+              py: 1.5, 
+              borderRadius: '24px', 
+              fontWeight: '700',
+              textTransform: 'none',
+              boxShadow: '0 4px 14px rgba(74, 155, 155, 0.25)'
+            }}
           >
             Start Fresh Practice
           </Button>
@@ -608,121 +745,191 @@ export default function AiChat() {
 
       {/* CASE C: Active chat dashboard */}
       {conversationId && (
-        <Grid container spacing={{ xs: 2, md: 3 }}>
+        <Grid container spacing={4}>
           <Grid item xs={12} md={7} sx={{ order: { xs: 2, md: 1 } }}>
-            <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 4, height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eaeaea', pb: 2, mb: 2 }}>
-                <Box>
-                  <Typography variant="h6" fontWeight="bold" color="primary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    🗣️ Luna (AI Tutor)
-                    <Chip 
-                      label={currentLevel.toUpperCase()} 
-                      size="small" 
-                      color={currentLevel === 'beginner' ? 'success' : currentLevel === 'intermediate' ? 'warning' : 'error'} 
-                      sx={{ fontWeight: 'bold', height: '18px', fontSize: '9px' }} 
-                    />
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">Topic: <strong>{topic}</strong></Typography>
+            <Paper 
+              elevation={0} 
+              sx={{ 
+                borderRadius: '24px', 
+                height: '100%', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                overflow: 'hidden', 
+                border: '1px solid rgba(0,0,0,0.05)',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.04)'
+              }}
+            >
+              {/* WhatsApp Style Header */}
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', bgcolor: '#205E5E', px: 3, py: 2, color: '#fff' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.8 }}>
+                  <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)', width: 42, height: 42, fontWeight: '900', border: '2px solid rgba(255,255,255,0.3)' }}>L</Avatar>
+                  <Box>
+                    <Typography variant="body1" fontWeight="800" sx={{ display: 'flex', alignItems: 'center', gap: 1, lineHeight: 1.2, fontSize: '15px' }}>
+                      Luna (AI Tutor)
+                      <Chip 
+                        label={currentLevel.toUpperCase()} 
+                        size="small" 
+                        sx={{ 
+                          fontWeight: '800', 
+                          height: '18px', 
+                          fontSize: '9px', 
+                          color: '#fff',
+                          bgcolor: currentLevel === 'beginner' ? '#2e7d32' : currentLevel === 'intermediate' ? '#ed6c02' : '#d32f2f'
+                        }} 
+                      />
+                    </Typography>
+                    <Typography sx={{ fontSize: '11px', color: 'rgba(255,255,255,0.75)', display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.2 }}>
+                      <Box sx={{ width: 6, height: 6, bgcolor: '#25d366', borderRadius: '50%', display: 'inline-block' }} /> Online · {topic}
+                    </Typography>
+                  </Box>
                 </Box>
                 
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                   <FormControlLabel
                     control={
                       <Switch 
                         checked={autoSpeak} 
                         onChange={(e) => setAutoSpeak(e.target.checked)} 
                         size="small" 
-                        color="primary"
+                        color="success"
+                        sx={{
+                          '& .MuiSwitch-switchBase.Mui-checked': { color: '#25d366' },
+                          '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#25d366' }
+                        }}
                       />
                     }
-                    label={<Typography variant="caption" color="text.secondary">Auto-Speak</Typography>}
+                    label={<Typography sx={{ fontSize: '11px', color: '#fff', fontWeight: '700' }}>Auto-Speak</Typography>}
                     sx={{ m: 0 }}
                   />
                   <Button 
                     size="small" 
-                    variant="outlined" 
-                    color="error" 
-                    startIcon={<ExitToAppIcon />} 
+                    variant="contained" 
                     onClick={handleEndSession}
-                    sx={{ borderRadius: 2, textTransform: 'none' }}
+                    sx={{ 
+                      borderRadius: '12px', 
+                      textTransform: 'none', 
+                      bgcolor: '#d32f2f', 
+                      '&:hover': { bgcolor: '#c62828' },
+                      fontSize: '11px', 
+                      fontWeight: '800',
+                      px: 2,
+                      py: 0.8
+                    }}
                   >
-                    End Chat
+                    End Session
                   </Button>
                 </Box>
               </Box>
 
               {/* Dynamic difficulty adaptation notifications */}
               {toastLevelInfo && (
-                <Alert severity="info" sx={{ mb: 2, py: 0.5, borderRadius: 2, fontWeight: 'bold' }}>
+                <Alert severity="info" sx={{ py: 0.5, px: 2, borderRadius: 0, fontWeight: '700', fontSize: '12px' }}>
                   ⚡ {toastLevelInfo}
                 </Alert>
               )}
 
-              {/* Scrolling messages wrapper */}
-              <Box sx={{ flexGrow: 1, minHeight: '350px', maxHeight: '420px', overflowY: 'auto', p: 1.5, display: 'flex', flexDirection: 'column', gap: 2, bgcolor: '#fcfdfd', border: '1px solid #f0f3f6', borderRadius: 3, mb: 2.5 }}>
+              {/* Scrolling messages wrapper with WhatsApp wallpaper */}
+              <Box sx={{ 
+                flexGrow: 1, 
+                minHeight: '400px', 
+                maxHeight: '450px', 
+                overflowY: 'auto', 
+                p: 3, 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: 2, 
+                bgcolor: '#efeae2', 
+                backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")',
+                backgroundSize: 'contain',
+                position: 'relative'
+              }}>
                 {messages.length === 0 && (
-                  <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 15, fontStyle: 'italic' }}>
-                    Type or speak to Luna to initiate practice...
-                  </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
+                    <Paper elevation={0} sx={{ p: 2, px: 3, borderRadius: '16px', bgcolor: 'rgba(255, 255, 255, 0.95)', border: '1px solid rgba(0,0,0,0.05)', textAlign: 'center', maxWidth: '320px', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}>
+                      <Typography variant="body2" sx={{ fontWeight: '600', color: '#54656f', fontSize: '13.5px', lineHeight: 1.5 }}>
+                        🔒 Messages are generated in real-time. Start the practice by saying hello below!
+                      </Typography>
+                    </Paper>
+                  </Box>
                 )}
 
                 {messages.map((msg, idx) => (
-                  <Box key={idx} sx={{ display: 'flex', flexDirection: 'column', alignItems: msg.sender === 'user' ? 'flex-end' : 'flex-start', gap: 0.5 }}>
-                    <Box sx={{ display: 'flex', justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start', alignItems: 'flex-start', gap: 1 }}>
+                  <Box key={idx} sx={{ display: 'flex', flexDirection: 'column', alignItems: msg.sender === 'user' ? 'flex-end' : 'flex-start', gap: 0.4 }}>
+                    <Box sx={{ display: 'flex', justifyContent: msg.sender === 'user' ? 'flex-end' : 'flex-start', alignItems: 'flex-end', gap: 1.2, width: '100%' }}>
+                      
                       {msg.sender === 'ai' && (
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-                          <IconButton size="small" onClick={() => speakText(msg.text)} sx={{ bgcolor: '#e3f2fd', '&:hover': { bgcolor: '#bbdefb' } }}>
-                            <VolumeUpIcon sx={{ fontSize: 14 }} color="primary" />
-                          </IconButton>
-                          <IconButton size="small" onClick={() => handleTranslateMessage(msg.text, idx)} sx={{ bgcolor: '#efebe9', '&:hover': { bgcolor: '#d7ccc8' } }}>
-                            <LanguageIcon sx={{ fontSize: 14 }} color="secondary" />
-                          </IconButton>
+                        <Box sx={{ display: 'flex', gap: 0.5, mr: 0.5, alignSelf: 'center' }}>
+                          <Tooltip title="Listen">
+                            <IconButton size="small" onClick={() => speakText(msg.text)} sx={{ bgcolor: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 5px rgba(0,0,0,0.03)', '&:hover': { bgcolor: '#f1f5f9' } }}>
+                              <VolumeUpIcon sx={{ fontSize: 13, color: '#205E5E' }} />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title="Translate">
+                            <IconButton size="small" onClick={() => handleTranslateMessage(msg.text, idx)} sx={{ bgcolor: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 5px rgba(0,0,0,0.03)', '&:hover': { bgcolor: '#f1f5f9' } }}>
+                              <LanguageIcon sx={{ fontSize: 13, color: '#205E5E' }} />
+                            </IconButton>
+                          </Tooltip>
                         </Box>
                       )}
+
                       <Paper sx={{ 
-                        p: 1.8, 
-                        maxWidth: '75%', 
-                        borderRadius: 3,
-                        bgcolor: msg.sender === 'user' ? 'primary.main' : '#f0f3f6',
-                        color: msg.sender === 'user' ? 'white' : 'text.primary',
-                        borderBottomRightRadius: msg.sender === 'user' ? 0 : 3,
-                        borderBottomLeftRadius: msg.sender === 'ai' ? 0 : 3,
-                        boxShadow: 'none',
-                        border: msg.sender === 'ai' ? '1px solid #e1e7ed' : 'none'
+                        p: 2, 
+                        maxWidth: '72%', 
+                        borderRadius: '16px',
+                        borderTopRightRadius: msg.sender === 'user' ? '0px' : '16px',
+                        borderTopLeftRadius: msg.sender === 'ai' ? '0px' : '16px',
+                        border: msg.sender === 'user' ? '1px solid #c7f0c2' : '1px solid #e2e8f0',
+                        bgcolor: msg.sender === 'user' ? '#e7fcdb' : '#ffffff',
+                        color: '#111b21',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.03)',
+                        position: 'relative'
                       }}>
-                        <Typography variant="body2">{msg.text}</Typography>
+                        <Typography sx={{ fontSize: '14.5px', pr: 5, whiteSpace: 'pre-line', lineHeight: 1.5, fontWeight: '500' }}>
+                          {msg.text}
+                        </Typography>
+                        {/* Time and Delivery checkmark status */}
+                        <Box sx={{ position: 'absolute', bottom: 3, right: 8, display: 'flex', alignItems: 'center', gap: 0.3 }}>
+                          <Typography sx={{ fontSize: '9px', color: '#8696a0', fontWeight: '500' }}>
+                            {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </Typography>
+                          {msg.sender === 'user' && (
+                            <Typography sx={{ fontSize: '11px', color: '#53bdeb', fontWeight: 'bold', lineHeight: 1 }}>✓✓</Typography>
+                          )}
+                        </Box>
                       </Paper>
                     </Box>
                     {translations[idx] && (
-                      <Typography variant="caption" sx={{ fontStyle: 'italic', color: 'text.secondary', ml: msg.sender === 'ai' ? 6 : 0, mt: 0.5, bgcolor: '#f1f5f9', px: 1, py: 0.5, borderRadius: 1 }}>
+                      <Typography sx={{ fontSize: '12.5px', fontStyle: 'italic', color: '#0b141a', ml: msg.sender === 'ai' ? 8 : 0, mt: 0.5, bgcolor: 'rgba(255, 255, 255, 0.95)', px: 2, py: 1, borderRadius: '12px', borderLeft: `3.5px solid ${TEAL}`, boxShadow: '0 2px 6px rgba(0,0,0,0.04)', fontWeight: '500' }}>
                         🌐 Translation: {translations[idx]}
                       </Typography>
                     )}
                   </Box>
                 ))}
                 {isLoading && (
-                  <Box sx={{ display: 'flex', gap: 1, ml: 4 }}>
-                    <CircularProgress size={16} />
-                    <Typography variant="caption" color="text.secondary">Luna is writing...</Typography>
+                  <Box sx={{ display: 'flex', gap: 1.2, ml: 1, bgcolor: 'rgba(255, 255, 255, 0.9)', px: 2, py: 1, borderRadius: '12px', maxWidth: '170px', border: '1px solid rgba(0,0,0,0.02)', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }}>
+                    <CircularProgress size={12} sx={{ color: '#205E5E', mt: 0.2 }} />
+                    <Typography sx={{ fontSize: '11.5px', color: '#54656f', fontWeight: '700' }}>Luna is typing...</Typography>
                   </Box>
                 )}
                 <div ref={chatEndRef} />
               </Box>
 
-              {/* Message Typing and Recording Input Form */}
-              <Box component="form" onSubmit={handleSendMessage} sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+              {/* Message Typing and Recording Input Form (WhatsApp Pill Style) */}
+              <Box component="form" onSubmit={handleSendMessage} sx={{ display: 'flex', gap: 1.5, alignItems: 'center', bgcolor: '#F0F2F5', p: 2, borderTop: '1px solid rgba(0,0,0,0.04)' }}>
                 <Tooltip title={isListening ? "Stop listening" : "Speak via Microphone"}>
                   <IconButton 
                     onClick={handleVoiceInput} 
-                    color={isListening ? "error" : "primary"} 
                     sx={{ 
-                      p: 1.5, 
-                      bgcolor: isListening ? '#ffebee' : '#f0f4f8',
+                      p: 1.6, 
+                      bgcolor: isListening ? '#ffebee' : '#fff',
+                      color: isListening ? '#d9534f' : '#64748B',
+                      border: '1px solid rgba(0,0,0,0.04)',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
                       animation: isListening ? 'pulse 1.3s infinite ease-in-out' : 'none',
                       '@keyframes pulse': {
-                        '0%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(244, 67, 54, 0.4)' },
-                        '70%': { transform: 'scale(1.08)', boxShadow: '0 0 0 10px rgba(244, 67, 54, 0)' },
-                        '100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(244, 67, 54, 0)' }
+                        '0%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(217, 83, 79, 0.4)' },
+                        '70%': { transform: 'scale(1.08)', boxShadow: '0 0 0 10px rgba(217, 83, 79, 0)' },
+                        '100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(217, 83, 79, 0)' }
                       }
                     }}
                   >
@@ -732,16 +939,36 @@ export default function AiChat() {
 
                 <TextField 
                   fullWidth 
-                  size="medium"
-                  placeholder={isListening ? "Listening closely... Speak now!" : "Type your message..."}
+                  size="small"
+                  placeholder={isListening ? "Listening closely... Speak now!" : "Type a message..."}
                   value={userText}
                   onChange={(e) => setUserText(e.target.value)}
                   disabled={isListening}
-                  sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3, bgcolor: '#fafafa' } }}
+                  sx={{ 
+                    '& .MuiOutlinedInput-root': { 
+                      borderRadius: '24px', 
+                      bgcolor: '#fff',
+                      border: '1px solid rgba(0,0,0,0.06)',
+                      px: 2,
+                      '& fieldset': { borderColor: 'transparent' },
+                      '&:hover fieldset': { borderColor: 'transparent' },
+                      '&.Mui-focused fieldset': { borderColor: 'transparent' }
+                    } 
+                  }}
                 />
 
-                <IconButton type="submit" color="primary" disabled={isLoading || !userText.trim()} sx={{ p: 1.5, bgcolor: '#e3f2fd', '&:hover': { bgcolor: '#bbdefb' } }}>
-                  <SendIcon />
+                <IconButton 
+                  type="submit" 
+                  disabled={isLoading || !userText.trim()} 
+                  sx={{ 
+                    p: 1.6, 
+                    bgcolor: (!userText.trim() || isLoading) ? '#e2e8f0' : 'teal', 
+                    color: '#fff',
+                    '&:hover': { bgcolor: '#3d8282' },
+                    boxShadow: '0 2px 8px rgba(74, 155, 155, 0.2)'
+                  }}
+                >
+                  <SendIcon sx={{ fontSize: 18 }} />
                 </IconButton>
               </Box>
             </Paper>
@@ -749,23 +976,23 @@ export default function AiChat() {
 
           {/* Gamified Scenario Objectives Panel */}
           <Grid item xs={12} md={5} sx={{ order: { xs: 1, md: 2 } }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3.5 }}>
               {/* Voice Pacing & Accent Settings Card */}
-              <Paper elevation={2} sx={{ p: 3, borderRadius: 4, borderLeft: '5px solid #9c27b0' }}>
-                <Typography variant="subtitle2" fontWeight="bold" color="secondary" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Paper elevation={0} sx={{ p: 3.5, borderRadius: '20px', borderLeft: `5px solid ${CORAL}`, border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 4px 20px rgba(0,0,0,0.01)' }}>
+                <Typography variant="subtitle2" fontWeight="800" color="secondary" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1, fontSize: '15px' }}>
                   <RecordVoiceOverIcon /> Voice Pacing & Accent
                 </Typography>
-                <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 2 }}>
+                <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 2.5, fontSize: '12px' }}>
                   Customize tutor speaking style to practice different dialects and pacing.
                 </Typography>
 
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
                   {/* Pacing Speed */}
                   <Box>
-                    <Typography variant="caption" fontWeight="bold" display="block" sx={{ mb: 0.5 }}>
+                    <Typography variant="caption" fontWeight="800" display="block" sx={{ mb: 1, color: '#1a1a2e' }}>
                       Speaking Speed: {speechRate}x
                     </Typography>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Box sx={{ display: 'flex', gap: 1.2 }}>
                       {[0.75, 1.0, 1.25].map((rate) => (
                         <Button
                           key={rate}
@@ -773,7 +1000,16 @@ export default function AiChat() {
                           size="small"
                           color="secondary"
                           onClick={() => setSpeechRate(rate)}
-                          sx={{ flex: 1, textTransform: 'none', py: 0.5, borderRadius: 1.5, fontSize: '11px', fontWeight: 'bold' }}
+                          sx={{ 
+                            flex: 1, 
+                            textTransform: 'none', 
+                            py: 0.8, 
+                            borderRadius: '10px', 
+                            fontSize: '11px', 
+                            fontWeight: '700',
+                            borderWidth: '1.5px',
+                            '&:hover': { borderWidth: '1.5px' }
+                          }}
                         >
                           {rate === 1.0 ? 'Normal' : `${rate}x`}
                         </Button>
@@ -783,10 +1019,10 @@ export default function AiChat() {
 
                   {/* Accent Selection */}
                   <Box>
-                    <Typography variant="caption" fontWeight="bold" display="block" sx={{ mb: 0.5 }}>
+                    <Typography variant="caption" fontWeight="800" display="block" sx={{ mb: 1, color: '#1a1a2e' }}>
                       English Dialect Accent:
                     </Typography>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Box sx={{ display: 'flex', gap: 1.2 }}>
                       {[
                         { code: 'us', label: 'American 🇺🇸' },
                         { code: 'uk', label: 'British 🇬🇧' }
@@ -797,7 +1033,16 @@ export default function AiChat() {
                           size="small"
                           color="secondary"
                           onClick={() => setAccent(item.code)}
-                          sx={{ flex: 1, textTransform: 'none', py: 0.5, borderRadius: 1.5, fontSize: '11px', fontWeight: 'bold' }}
+                          sx={{ 
+                            flex: 1, 
+                            textTransform: 'none', 
+                            py: 0.8, 
+                            borderRadius: '10px', 
+                            fontSize: '11px', 
+                            fontWeight: '700',
+                            borderWidth: '1.5px',
+                            '&:hover': { borderWidth: '1.5px' }
+                          }}
                         >
                           {item.label}
                         </Button>
@@ -808,47 +1053,48 @@ export default function AiChat() {
               </Paper>
 
               {missionText && (
-                <Paper elevation={2} sx={{ p: 3, borderRadius: 4, borderLeft: '5px solid #1976d2' }}>
-                  <Typography variant="subtitle1" fontWeight="bold" color="primary" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Paper elevation={0} sx={{ p: 3.5, borderRadius: '20px', borderLeft: `5px solid ${TEAL}`, border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 4px 20px rgba(0,0,0,0.01)' }}>
+                  <Typography variant="subtitle1" fontWeight="800" color="primary" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1, fontSize: '16px' }}>
                     🎯 Scenario Mission
                   </Typography>
-                  <Typography variant="body2" sx={{ mb: 2.5, fontStyle: 'italic', color: 'text.primary' }}>
+                  <Typography variant="body2" sx={{ mb: 2.5, fontStyle: 'italic', color: '#1E293B', lineHeight: 1.6 }}>
                     "{missionText}"
                   </Typography>
                   
                   {/* Mission Status Checklist */}
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3, p: 1.5, bgcolor: missionCompleted ? '#e8f5e9' : '#fffde7', borderRadius: 2 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3, p: 2, bgcolor: missionCompleted ? '#E8F5E9' : '#FFFDE7', borderRadius: '12px', border: missionCompleted ? '1px solid #C8E6C9' : '1px solid #FFE082' }}>
                     {missionCompleted ? (
                       <CheckCircleIcon color="success" />
                     ) : (
                       <CircularProgress size={16} thickness={5} />
                     )}
-                    <Typography variant="body2" fontWeight="bold" color={missionCompleted ? 'success.main' : 'warning.main'}>
+                    <Typography variant="body2" fontWeight="800" color={missionCompleted ? 'success.main' : 'warning.main'}>
                       {missionCompleted ? 'Mission Completed! Excellent Job!' : 'Mission in progress...'}
                     </Typography>
                   </Box>
 
                   {/* Vocabulary Tracker */}
-                  <Typography variant="body2" fontWeight="bold" sx={{ mb: 1 }}>Target Vocabulary Checklist:</Typography>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                  <Typography variant="body2" fontWeight="800" sx={{ mb: 1.5, color: '#1a1a2e' }}>Target Vocabulary Checklist:</Typography>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.2 }}>
                     {targetVocabulary.map((word) => {
                       const isUsed = usedVocabulary.includes(word.toLowerCase());
                       return (
-                        <Box key={word} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Box key={word} sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
                           <Box sx={{ 
-                            width: 18, 
-                            height: 18, 
+                            width: 20, 
+                            height: 20, 
                             borderRadius: '50%', 
                             border: '2px solid',
-                            borderColor: isUsed ? 'success.main' : '#ccc',
+                            borderColor: isUsed ? 'success.main' : '#cbd5e1',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            bgcolor: isUsed ? 'success.main' : 'transparent'
+                            bgcolor: isUsed ? 'success.main' : 'transparent',
+                            transition: 'all 0.2s'
                           }}>
-                            {isUsed && <CheckCircleIcon sx={{ fontSize: 14, color: '#fff' }} />}
+                            {isUsed && <CheckCircleIcon sx={{ fontSize: 15, color: '#fff' }} />}
                           </Box>
-                          <Typography variant="body2" sx={{ color: isUsed ? 'success.main' : 'text.primary', fontWeight: isUsed ? 'bold' : 'normal', textDecoration: isUsed ? 'line-through' : 'none' }}>
+                          <Typography variant="body2" sx={{ color: isUsed ? 'success.main' : '#475569', fontWeight: isUsed ? '700' : '500', textDecoration: isUsed ? 'line-through' : 'none' }}>
                             {word}
                           </Typography>
                         </Box>

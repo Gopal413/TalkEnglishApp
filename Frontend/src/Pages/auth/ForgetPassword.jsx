@@ -55,12 +55,14 @@ function ForgotPassword() {
                     disabled={loading}
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <EmailOutlined sx={{ color: 'rgba(255,255,255,0.5)' }} fontSize="small" />
-                            </InputAdornment>
-                        ),
+                    slotProps={{
+                        input: {
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <EmailOutlined sx={{ color: 'rgba(255,255,255,0.5)' }} fontSize="small" />
+                                </InputAdornment>
+                            ),
+                        }
                     }}
                 />
                 
@@ -75,11 +77,11 @@ function ForgotPassword() {
                     {loading ? <CircularProgress size={24} color="inherit" /> : 'Send Reset Code'}
                 </Button>
                 
-                <Grid container sx={{ justifyContent: "center", mt: 2 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                     <Link component={RouterLink} to="/login" variant="body2" fontWeight="600" sx={{ color: '#4A9B9B', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
                         Back to Login
                     </Link>
-                </Grid>
+                </Box>
             </Box>
         </AuthLayout>
     );

@@ -133,15 +133,20 @@ async function login(req, res) {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
 
+        // Block disabled accounts
+        if (user.isActive === false) {
+            return res.status(403).json({ message: "Your account has been disabled. Please contact support." });
+        }
+
         // 🔑 Generate access token (expires in 1d) and refresh token (expires in 7d)
         const token = jwt.sign(
-            { id: user._id, role: user.role },
+            { id: user._id, role: user.role || 'user', name: user.name },
             process.env.JWT_SECRET || 'fallback_secret',
             { expiresIn: '1d' }
         );
 
         const refreshToken = jwt.sign(
-            { id: user._id, role: user.role },
+            { id: user._id, role: user.role || 'user', name: user.name },
             process.env.JWT_REFRESH_SECRET || 'fallback_refresh_secret',
             { expiresIn: '7d' }
         );
@@ -172,6 +177,7 @@ async function login(req, res) {
                 id: user._id,
                 name: user.name,
                 email: user.email,
+                role: user.role || 'user',
                 isOnboarded: user.isOnboarded,
                 level: user.level,
                 goal: user.goal,
@@ -205,6 +211,7 @@ async function getProfile(req, res) {
             id: user._id,
             name: user.name,
             email: user.email,
+            role: user.role,
             isOnboarded: user.isOnboarded,
             level: user.level,
             goal: user.goal,
@@ -259,8 +266,8 @@ async function forgetPassword(req, res) {
 
 async function verifyResetOtp(req, res) {
     try {
-        const { otp } = req.body;
-        const emailFromCookie = req.cookies.reset_email;
+        const { otp, email } = req.body;
+        const emailFromCookie = email || req.cookies.reset_email;
 
         if (!emailFromCookie) return res.status(400).json({ error: 'Session expired. Request OTP again.' });
         if (!otp) return res.status(400).json({ error: 'Please provide the OTP code' });
@@ -286,8 +293,8 @@ async function verifyResetOtp(req, res) {
 // =========================================================================
 async function resetPassword(req, res) {
     try {
-        const { newPassword } = req.body; // Frontend ONLY sends the new password here
-        const emailFromCookie = req.cookies.reset_email;
+        const { newPassword, email } = req.body;
+        const emailFromCookie = email || req.cookies.reset_email;
 
         if (!emailFromCookie) return res.status(400).json({ error: 'Reset session expired. Start over.' });
         if (!newPassword) return res.status(400).json({ error: 'New password is required' });
