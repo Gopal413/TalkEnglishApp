@@ -45,7 +45,7 @@ const isUserMiddleware = (req, res, next) => {
         res.cookie('auth_token', newAccessToken, { 
             httpOnly: true, 
             maxAge: 24 * 60 * 60 * 1000, 
-            sameSite: 'lax',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             secure: process.env.NODE_ENV === 'production'
         });
 
@@ -55,8 +55,16 @@ const isUserMiddleware = (req, res, next) => {
     } catch (refreshError) {
         console.error("Refresh token verification failed:", refreshError.message);
         // Clear cookies to avoid infinite redirect loops
-        res.clearCookie('auth_token');
-        res.clearCookie('refresh_token');
+        res.clearCookie('auth_token', {
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            secure: process.env.NODE_ENV === 'production'
+        });
+        res.clearCookie('refresh_token', {
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            secure: process.env.NODE_ENV === 'production'
+        });
         return res.status(401).json({ error: 'Session expired. Please log in again.' });
     }
 };

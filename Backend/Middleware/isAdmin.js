@@ -51,15 +51,23 @@ const isAdminMiddleware = (req, res, next) => {
         res.cookie('auth_token', newAccessToken, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
-            sameSite: 'lax',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             secure: process.env.NODE_ENV === 'production'
         });
 
         const payload = { id: decodedRefresh.id, role: decodedRefresh.role || 'user' };
         return checkRole(payload);
     } catch (refreshError) {
-        res.clearCookie('auth_token');
-        res.clearCookie('refresh_token');
+        res.clearCookie('auth_token', {
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            secure: process.env.NODE_ENV === 'production'
+        });
+        res.clearCookie('refresh_token', {
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            secure: process.env.NODE_ENV === 'production'
+        });
         return res.status(401).json({ error: 'Session expired. Please log in again.' });
     }
 };

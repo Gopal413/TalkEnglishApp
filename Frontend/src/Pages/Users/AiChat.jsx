@@ -50,6 +50,9 @@ import {
 import PronunciationCoach from './PronunciationCoach';
 import GrammarFeedback from './GrammarFeedback';
 
+
+const TEAL = '#4A9B9B';
+const CORAL = '#E07B6A';
 // Define gorgeous categorized learning scenarios
 const PRESET_SCENARIOS = [
   {

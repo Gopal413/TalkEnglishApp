@@ -37,7 +37,12 @@ async function OnlyEmail(req, res) {
         await sendOTPEmail(email, otp);
 
         // WHY: We drop the email into a cookie so the frontend doesn't have to resend it on the next step
-        res.cookie('user_email', email, { httpOnly: true, maxAge: 15 * 60 * 1000, sameSite: 'lax' });
+        res.cookie('user_email', email, { 
+            httpOnly: true, 
+            maxAge: 15 * 60 * 1000, 
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            secure: process.env.NODE_ENV === 'production'
+        });
 
         return res.status(200).json({
             message: 'OTP sent successfully!',
@@ -107,7 +112,11 @@ async function register(req, res) {
 
         // WHY: Clean up temp memory and remove the registration tracker cookie
         delete tempOtpStorage[emailFromCookie];
-        res.clearCookie('user_email');
+        res.clearCookie('user_email', {
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            secure: process.env.NODE_ENV === 'production'
+        });
 
         return res.status(201).json({ message: 'User created successfully', user });
     } catch (err) {
@@ -155,14 +164,14 @@ async function login(req, res) {
         res.cookie('auth_token', token, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
-            sameSite: 'lax',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             secure: process.env.NODE_ENV === 'production'
         });
 
         res.cookie('refresh_token', refreshToken, {
             httpOnly: true,
             maxAge: 7 * 24 * 60 * 60 * 1000,
-            sameSite: 'lax',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             secure: process.env.NODE_ENV === 'production'
         });
 
@@ -251,7 +260,12 @@ async function forgetPassword(req, res) {
         await sendOTPEmail(email, otp);
 
         // Set short-term cookie to track whose password is being reset
-        res.cookie('reset_email', email, { httpOnly: true, maxAge: 10 * 60 * 1000, sameSite: 'lax' });
+        res.cookie('reset_email', email, { 
+            httpOnly: true, 
+            maxAge: 10 * 60 * 1000, 
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            secure: process.env.NODE_ENV === 'production'
+        });
 
         return res.status(200).json({
             message: 'Password reset OTP sent to email!',
@@ -314,7 +328,11 @@ async function resetPassword(req, res) {
         await user.save();
 
         // Clear tracking cookie
-        res.clearCookie('reset_email');
+        res.clearCookie('reset_email', {
+            httpOnly: true,
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            secure: process.env.NODE_ENV === 'production'
+        });
 
         return res.status(200).json({ message: 'Password updated successfully! Go ahead and login.' });
     } catch (err) {
@@ -326,8 +344,16 @@ async function resetPassword(req, res) {
 // 8. LOGOUT
 // =========================================================================
 async function logout(req, res) {
-    res.clearCookie('auth_token');
-    res.clearCookie('refresh_token');
+    res.clearCookie('auth_token', {
+        httpOnly: true,
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === 'production'
+    });
+    res.clearCookie('refresh_token', {
+        httpOnly: true,
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === 'production'
+    });
     return res.status(200).json({ message: 'Logged out successfully' });
 }
 
@@ -352,7 +378,7 @@ async function refreshToken(req, res) {
         res.cookie('auth_token', token, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
-            sameSite: 'lax',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             secure: process.env.NODE_ENV === 'production'
         });
 
