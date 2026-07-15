@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { sendOTPEmail } = require('../Utils/SentToEmail');
-const userModel = require('../Models/userModel');
+const userModel = require('../Models/UserModel');
 
 // Temporary in-memory storage to hold OTP info BEFORE a user is created in MongoDB
 const tempOtpStorage = {};
