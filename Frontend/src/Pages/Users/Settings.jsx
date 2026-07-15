@@ -43,7 +43,8 @@ const levelColors = {
   intermediate: { bg: 'rgba(245,158,11,0.12)', color: '#f59e0b', label: 'Intermediate' },
   advanced: { bg: 'rgba(239,68,68,0.12)', color: '#ef4444', label: 'Advanced' }
 };
-
+const TEAL = '#4A9B9B'; 
+const CORAL = '#E07B6A';
 const goalLabels = {
   travel: '✈️ Travel & Tourism',
   business: '💼 Work & Job Interviews',

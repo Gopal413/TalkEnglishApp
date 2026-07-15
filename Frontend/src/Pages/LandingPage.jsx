@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-    Box, 
-    Container, 
-    Typography, 
-    Button, 
-    Grid, 
-    Card, 
-    CardContent, 
-    Paper, 
-    Avatar, 
-    Chip, 
-    IconButton,
-    TextField,
-    InputAdornment,
-    Divider
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  Paper,
+  Avatar,
+  Chip,
+  TextField,
+  Divider,
 } from '@mui/material';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -62,41 +60,40 @@ export default function LandingPage() {
     };
 
     return (
-        <Box sx={{ bgcolor: '#F7F9FC', minHeight: '100vh', overflowX: 'hidden' }}>
+        <Box sx={{ bgcolor: 'white', minHeight: '100vh', overflowX: 'hidden' }}>
             {/* Hero Section */}
-            <Box 
+            <Box
                 sx={{
-                    background: 'radial-gradient(circle at 10% 20%, rgba(74, 155, 155, 0.1) 0%, rgba(224, 123, 106, 0.05) 90%), #ffffff',
+                    background: 'linear-gradient(135deg, rgba(232, 244, 244, 0.7) 0%, rgba(253, 240, 238, 0.7) 100%)',
                     pt: { xs: 10, md: 16 },
                     pb: { xs: 8, md: 12 },
-                    borderBottom: '1px solid rgba(0, 0, 0, 0.05)',
                     position: 'relative'
                 }}
             >
                 {/* Background decorative blobs */}
-                <Box sx={{ position: 'absolute', top: '10%', left: '5%', width: 300, height: 300, borderRadius: '50%', background: 'rgba(74, 155, 155, 0.05)', filter: 'blur(60px)', zIndex: 0 }} />
-                <Box sx={{ position: 'absolute', bottom: '15%', right: '10%', width: 250, height: 250, borderRadius: '50%', background: 'rgba(224, 123, 106, 0.05)', filter: 'blur(50px)', zIndex: 0 }} />
+                <Box sx={{ position: 'absolute', top: '10%', left: '5%', width: {xs: 200, md: 300}, height: {xs: 200, md: 300}, borderRadius: '50%', background: 'rgba(74, 155, 155, 0.1)', filter: 'blur(80px)', zIndex: 0 }} />
+                <Box sx={{ position: 'absolute', bottom: '15%', right: '10%', width: {xs: 150, md: 250}, height: {xs: 150, md: 250}, borderRadius: '50%', background: 'rgba(224, 123, 106, 0.1)', filter: 'blur(70px)', zIndex: 0 }} />
 
                 <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
                     <Grid container spacing={6} alignItems="center">
                         <Grid item xs={12} md={6}>
-                            <Chip 
-                                label="✨ TalkEnglish AI 2.0" 
-                                sx={{ 
-                                    bgcolor: 'primary.light', 
-                                    color: 'primary.main', 
-                                    fontWeight: '700', 
-                                    mb: 2, 
-                                    px: 1, 
+                            <Chip
+                                label="✨ TalkEnglish AI 2.0"
+                                sx={{
+                                    bgcolor: 'rgba(74, 155, 155, 0.1)',
+                                    color: 'primary.main',
+                                    fontWeight: '700',
+                                    mb: 2,
+                                    px: 1,
                                     py: 0.5,
                                     fontSize: '13px'
-                                }} 
+                                }}
                             />
-                            <Typography 
-                                variant="h1" 
-                                sx={{ 
-                                    fontSize: { xs: '36px', sm: '48px', md: '56px' }, 
-                                    fontWeight: 900, 
+                            <Typography
+                                variant="h1"
+                                sx={{
+                                    fontSize: { xs: '36px', sm: '48px', md: '56px' },
+                                    fontWeight: 900,
                                     lineHeight: 1.15,
                                     color: '#1a1a2e',
                                     letterSpacing: '-1.5px',
@@ -109,57 +106,51 @@ export default function LandingPage() {
                                     <Box component="span" sx={{ position: 'absolute', bottom: -5, left: 0, width: '100%', height: '4px', bgcolor: 'secondary.main', borderRadius: 2 }} />
                                 </Box>
                             </Typography>
-                            <Typography 
-                                variant="h6" 
-                                color="text.secondary" 
-                                sx={{ 
-                                    fontWeight: 500, 
-                                    fontSize: { xs: '16px', sm: '18px' }, 
-                                    mb: 4, 
-                                    lineHeight: 1.6 
+                            <Typography
+                                variant="h6"
+                                color="text.secondary"
+                                sx={{
+                                    fontWeight: 500,
+                                    fontSize: { xs: '16px', sm: '18px' },
+                                    mb: 4,
+                                    lineHeight: 1.6
                                 }}
                             >
                                 Engage in realistic, adaptive conversations, master pronunciation, and receive gentle, real-time grammar guidance from your private, AI-powered speech partner.
                               </Typography>
                             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-                                <Button 
-                                    variant="contained" 
+                                <Button
+                                    variant="contained"
                                     size="large"
                                     onClick={() => navigate(isAuthenticated ? '/dashboard' : '/register')}
                                     endIcon={<ArrowForwardIcon />}
-                                    sx={{ 
-                                        py: 1.6, 
-                                        px: 4, 
+                                    sx={{
+                                        py: 1.6,
+                                        px: 4,
                                         fontSize: '16px',
                                         boxShadow: '0 8px 24px rgba(74, 155, 155, 0.25)'
                                     }}
                                 >
                                     {isAuthenticated ? 'Go to Dashboard' : 'Start Speaking Free'}
                                 </Button>
-                                <Button 
-                                    variant="outlined" 
-                                    color="inherit" 
+                                <Button
+                                    variant="outlined"
+                                    color="primary"
                                     size="large"
                                     onClick={() => {
                                         const element = document.getElementById('demo-section');
                                         element?.scrollIntoView({ behavior: 'smooth' });
                                     }}
-                                    sx={{ 
-                                        py: 1.6, 
-                                        px: 4, 
+                                    sx={{
+                                        py: 1.6,
+                                        px: 4,
                                         fontSize: '16px',
-                                        borderColor: '#ddd',
-                                        color: '#555',
-                                        '&:hover': {
-                                            borderColor: '#999',
-                                            bgcolor: 'rgba(0,0,0,0.02)'
-                                        }
                                     }}
                                 >
                                     Try Live Demo
                                 </Button>
                             </Box>
-                            
+
                             {/* Stats/Badges */}
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 4, mt: 5, flexWrap: 'wrap' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -230,11 +221,11 @@ export default function LandingPage() {
             </Box>
 
             {/* Interactive Live Demo Section */}
-            <Box id="demo-section" sx={{ py: 10, bgcolor: '#ffffff' }}>
+            <Box id="demo-section" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#ffffff' }}>
                 <Container maxWidth="md">
                     <Box sx={{ textAlign: 'center', mb: 6 }}>
                         <Chip label="TRY IT NOW" color="secondary" sx={{ fontWeight: 'bold', mb: 1 }} />
-                        <Typography variant="h3" fontWeight="800" sx={{ mb: 2 }}>
+                        <Typography variant="h3" fontWeight="800" sx={{ mb: 2, fontSize: { xs: '28px', md: '36px' } }}>
                             Test the Grammar Coach Live
                         </Typography>
                         <Typography variant="body1" color="text.secondary">
@@ -242,13 +233,13 @@ export default function LandingPage() {
                         </Typography>
                     </Box>
 
-                    <Paper 
-                        elevation={0} 
-                        sx={{ 
-                            p: { xs: 2, sm: 4 }, 
-                            borderRadius: '20px', 
+                    <Paper
+                        elevation={0}
+                        sx={{
+                            p: { xs: 2, sm: 4 },
+                            borderRadius: '20px',
                             border: '1.5px solid rgba(74, 155, 155, 0.15)',
-                            bgcolor: '#F7F9FC' 
+                            bgcolor: 'rgba(247, 249, 252, 0.5)'
                         }}
                     >
                         <Grid container spacing={3}>
@@ -268,7 +259,7 @@ export default function LandingPage() {
                                     }}
                                 />
                             </Grid>
-                            
+
                             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
                                 <Typography variant="caption" color="text.secondary">
                                     💡 Try typing: <em>"We was playing soccer."</em> or <em>"She like coffee."</em>
@@ -286,10 +277,10 @@ export default function LandingPage() {
 
                             {demoCorrection && (
                                 <Grid item xs={12}>
-                                    <Box 
-                                        sx={{ 
-                                            p: 2.5, 
-                                            borderRadius: '12px', 
+                                    <Box
+                                        sx={{
+                                            p: 2.5,
+                                            borderRadius: '12px',
                                             bgcolor: demoCorrection.original === demoCorrection.corrected ? '#E8F5E9' : '#FFFDE7',
                                             borderLeft: `5px solid ${demoCorrection.original === demoCorrection.corrected ? '#2e7d32' : '#fbc02d'}`,
                                             transition: 'all 0.3s'
@@ -320,10 +311,10 @@ export default function LandingPage() {
             </Box>
 
             {/* Core Features Showcase */}
-            <Box sx={{ py: 12, bgcolor: '#F7F9FC' }}>
+            <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: '#F7F9FC' }}>
                 <Container maxWidth="lg">
                     <Box sx={{ textAlign: 'center', mb: 8 }}>
-                        <Typography variant="h3" fontWeight="800" sx={{ mb: 2 }}>
+                        <Typography variant="h3" fontWeight="800" sx={{ mb: 2, fontSize: { xs: '28px', md: '36px' } }}>
                             Designed to Accelerate Your Fluency
                         </Typography>
                         <Typography variant="body1" color="text.secondary" sx={{ maxWidth: '600px', mx: 'auto' }}>
@@ -359,28 +350,29 @@ export default function LandingPage() {
                             }
                         ].map((feat, index) => (
                             <Grid item xs={12} sm={6} md={3} key={index}>
-                                <Card 
+                                <Card
                                     elevation={0}
-                                    sx={{ 
-                                        height: '100%', 
-                                        borderRadius: '16px', 
-                                        border: '1px solid rgba(0,0,0,0.05)',
+                                    sx={{
+                                        height: '100%',
+                                        borderRadius: '20px',
+                                        border: '1px solid transparent',
+                                        background: 'linear-gradient(white, white) padding-box, linear-gradient(135deg, rgba(74, 155, 155, 0.2), rgba(224, 123, 106, 0.2)) border-box',
                                         '&:hover': {
                                             transform: 'translateY(-4px)',
-                                            boxShadow: '0 8px 30px rgba(0,0,0,0.05)'
+                                            boxShadow: '0 12px 40px rgba(0,0,0,0.07)'
                                         },
-                                        transition: 'all 0.2s'
+                                        transition: 'all 0.25s ease-in-out'
                                     }}
                                 >
                                     <CardContent sx={{ p: 3 }}>
-                                        <Box 
-                                            sx={{ 
-                                                width: 60, 
-                                                height: 60, 
-                                                borderRadius: '12px', 
-                                                bgcolor: feat.bg, 
-                                                display: 'flex', 
-                                                alignItems: 'center', 
+                                        <Box
+                                            sx={{
+                                                width: 60,
+                                                height: 60,
+                                                borderRadius: '16px',
+                                                bgcolor: feat.bg,
+                                                display: 'flex',
+                                                alignItems: 'center',
                                                 justifyContent: 'center',
                                                 mb: 2.5
                                             }}
@@ -403,7 +395,7 @@ export default function LandingPage() {
 
 
             {/* Footer */}
-            <Box sx={{ bgcolor: '#1a1a2e', color: 'rgba(255, 255, 255, 0.7)', py: 6, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+            <Box sx={{ bgcolor: '#1a1a2e', color: 'rgba(255, 255, 255, 0.7)', py: { xs: 4, md: 6 }, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
                 <Container maxWidth="lg">
                     <Grid container spacing={4} sx={{ mb: 4 }}>
                         <Grid item xs={12} md={4}>
@@ -436,9 +428,9 @@ export default function LandingPage() {
                             </Box>
                         </Grid>
                     </Grid>
-                    
+
                     <Divider sx={{ bgcolor: 'rgba(255,255,255,0.08)', mb: 3 }} />
-                    
+
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
                         <Typography variant="caption">© 2026 TalkEnglish Inc. All rights reserved.</Typography>
                         <Typography variant="caption">Crafted by Antigravity AI</Typography>
