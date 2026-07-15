@@ -19,6 +19,7 @@ import { getUserProgress } from '../../api/authApi';
 
 const TEAL = '#4A9B9B';
 const CORAL = '#E07B6A';
+const TEAL_LIGHT = '#E8F4F4';
 
 // Grade calculator
 function getGrade(score) {
