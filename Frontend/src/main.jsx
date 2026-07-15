@@ -4,10 +4,11 @@ import App from './App.jsx';
 import { Provider } from 'react-redux';
 import { AuthProvider } from './context/AuthContext.jsx';
 import { SnackbarProvider } from './context/SnackbarContext.jsx';
-import { store } from './Redux/Store/Store.js';
+//import { store } from './Redux/Store/Store.js';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
+import { store } from './Redux/Store/store.js';
 
 // Load Inter font for premium cross-device typography
 const fontLink = document.createElement('link');
