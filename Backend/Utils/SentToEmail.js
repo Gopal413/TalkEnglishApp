@@ -19,6 +19,7 @@ console.log(process.env.EMAIL_PASS);
  */
 const sendOTPEmail = async (toEmail, otp) => {
     try {
+        console.log("sendOTPEmail start 1");
         // 2. Define mail options dynamically
         const mailOptions = {
             from: `"Your App Security" <${process.env.EMAIL_USER}>`,
@@ -43,9 +44,12 @@ const sendOTPEmail = async (toEmail, otp) => {
                 </div>
             `
         };
+                console.log("sendOTPEmail start 2");
 
         // 3. Send the email and return the result
         const info = await transporter.sendMail(mailOptions);
+                console.log("sendOTPEmail start 3");
+
         console.log("result :",info)
         console.timeEnd("email send time")
         console.log(`OTP sent successfully to ${toEmail}. MessageID: ${info.messageId}`);
