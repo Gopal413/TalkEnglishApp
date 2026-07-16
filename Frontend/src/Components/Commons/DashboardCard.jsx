@@ -12,7 +12,7 @@ export default function DashboardCard({ children, sx, ...props }) {
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       sx={{
         p: { xs: 3, sm: 4 },
-        borderRadius: 6, // 24px
+        borderRadius: 2, // 24px
         border: '1px solid #E2E8F0',
         bgcolor: '#FFFFFF',
         position: 'relative',

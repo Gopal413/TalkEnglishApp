@@ -19,6 +19,7 @@ export default function Dashboard() {
   const [stats, setStats] = useState(null);
   const [loadingStats, setLoadingStats] = useState(true);
   const [lessonStats, setLessonStats] = useState({ total: 0, completed: 0 });
+  const [lessons, setLessons] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
 
   // 🌅 Warm-up State
@@ -53,7 +54,9 @@ export default function Dashboard() {
     const loadLessonStats = async () => {
       try {
         const data = await getAllLessonsApi();
-        setLessonStats({ total: data.lessons?.length || 0, completed: data.totalCompleted || 0 });
+        const lessonList = data.lessons || [];
+        setLessons(lessonList);
+        setLessonStats({ total: lessonList.length, completed: data.totalCompleted || 0 });
       } catch (err) {
         // silently fail
       }
@@ -204,6 +207,9 @@ export default function Dashboard() {
     setGrammarFeedback(null);
   };
 
+  // Find the next lesson that is unlocked and not completed
+  const nextLesson = lessons.find(l => !l.isCompleted && !l.isLocked) || lessons.find(l => !l.isCompleted) || lessons[0];
+
   const levelTarget = 10;
   const conversationsDone = stats?.totalConversations || 0;
   const goalPct = Math.min(Math.round((conversationsDone / levelTarget) * 100), 100);
@@ -241,7 +247,7 @@ export default function Dashboard() {
             <Paper
               elevation={0}
               sx={{
-                borderRadius: 6, // 24px
+                borderRadius: 2, // 24px
                 overflow: 'hidden',
                 bgcolor: 'background.paper',
                 mb: 4,
@@ -326,6 +332,7 @@ export default function Dashboard() {
               {/* Structured Syllabus Tracker */}
               <ContinueLearning
                 lessonStats={lessonStats}
+                nextLesson={nextLesson}
                 onNavigate={() => navigate('/lessons')}
               />
 

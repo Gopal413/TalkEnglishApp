@@ -332,14 +332,14 @@ export default function Progress() {
         </Paper>
 
         {/* ── Weekly Activity Chart (CSS Bar Chart) ── */}
-        <Paper 
+        {/* <Paper 
           elevation={0} 
           sx={{ 
             p: 3.5, 
             borderRadius: '24px', 
             mb: 3.5, 
             border: '1px solid rgba(0,0,0,0.04)', 
-            bgcolor: '#fff',
+            bgcolor: '#ce1e1e',
             boxShadow: '0 8px 30px rgba(0,0,0,0.01)'
           }}
         >
@@ -347,7 +347,7 @@ export default function Progress() {
             <BarChartIcon sx={{ fontSize: 18, color: CORAL }} /> Weekly Study Time (Minutes)
           </Typography>
 
-          <Box sx={{ 
+          {/* <Box sx={{ 
             display: 'flex', 
             justifyContent: 'space-between', 
             alignItems: 'flex-end', 
@@ -386,7 +386,7 @@ export default function Progress() {
                 </Box>
               );
             })}
-          </Box>
+          </Box> 
           <Box sx={{ display: 'flex', justifyContent: 'space-between', px: 1 }}>
             {weeklyActivity.map((w, idx) => (
               <Typography key={idx} variant="caption" sx={{ fontSize: '11px', color: '#64748b', width: 24, textAlign: 'center', fontWeight: '700' }}>
@@ -394,7 +394,7 @@ export default function Progress() {
               </Typography>
             ))}
           </Box>
-        </Paper>
+        </Paper> */}
 
         {/* ── Level Progress ── */}
         <Paper 
@@ -443,7 +443,7 @@ export default function Progress() {
         </Paper>
 
         {/* ── Unlocked Achievements ── */}
-        <Paper 
+        {/* <Paper 
           elevation={0} 
           sx={{ 
             p: 3.5, 
@@ -495,7 +495,7 @@ export default function Progress() {
               </Box>
             ))}
           </Box>
-        </Paper>
+        </Paper> */}
 
         {/* ── Vocabulary Chips ── */}
         {stats.uniqueVocabulary?.length > 0 && (

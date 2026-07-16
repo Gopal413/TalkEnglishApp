@@ -326,7 +326,7 @@ export default function Settings() {
                       </Box>
                     </Box>
 
-                    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.8 }}>
+                    {/* <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.8 }}>
                       <LanguageIcon sx={{ color: '#64748b', mt: 0.2 }} />
                       <Box>
                         <Typography variant="body2" fontWeight="800" sx={{ color: '#1a1a2e' }}>Native Helper Language</Typography>
@@ -334,7 +334,7 @@ export default function Settings() {
                           {languageNames[nativeLanguage] || nativeLanguage}
                         </Typography>
                       </Box>
-                    </Box>
+                    </Box> */}
 
                     <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.8 }}>
                       <NotificationsActiveIcon sx={{ color: '#64748b', mt: 0.2 }} />
