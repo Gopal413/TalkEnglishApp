@@ -35,19 +35,19 @@ async function OnlyEmail(req, res) {
             isVerified: false
         };
 
-console.log("emailonly");
-console.log("email:", email);
+            console.log("emailonly");
+            console.log("email:", email);
 
-console.log("Before sendOTPEmail");
-const result = await sendOTPEmail(email, otp);
-console.log("After sendOTPEmail");
-console.log(result);
-if (!result.success) {
-    console.error(result.error);
-    return res.status(500).json({
-        error: "Failed to send OTP email"
-    });
-}
+            console.log("Before sendOTPEmail");
+            const result = await sendOTPEmail(email, otp);
+            console.log("After sendOTPEmail");
+            console.log(result);
+            if (!result.success) {
+                console.error(result.error);
+                return res.status(500).json({
+                    error: "Failed to send OTP email"
+                });
+            }
 
        
 
@@ -65,8 +65,12 @@ if (!result.success) {
             otpExpiresAt: expiresAt // Send expiration timestamp to frontend
         });
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: 'Server error' });
+          console.error("OTP SEND ERROR:", err);
+    return res.status(500).json({
+        error: "Failed to send OTP email",
+        details: err.message
+    });
+    
     }
 }
 
