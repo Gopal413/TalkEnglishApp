@@ -243,7 +243,7 @@ export default function Dashboard() {
         {/* 2-Column Responsive Workspace Grid */}
         <Grid container spacing={4}>
           {/* Left Column: Interactive Tools */}
-          <Grid item xs={12} md={8}>
+          <Grid size={{xs:12,md:8}}>
             <Paper
               elevation={0}
               sx={{
@@ -327,7 +327,8 @@ export default function Dashboard() {
           </Grid>
 
           {/* Right Column: Actions Sidebar */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{xs:12,md:4}}>
+            
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               {/* Structured Syllabus Tracker */}
               <ContinueLearning

@@ -9,6 +9,8 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASS
     }
 });
+console.log(process.env.EMAIL_USER);
+console.log(process.env.EMAIL_PASS);
 
 /**
  * Reusable function to send OTP emails
@@ -44,6 +46,8 @@ const sendOTPEmail = async (toEmail, otp) => {
 
         // 3. Send the email and return the result
         const info = await transporter.sendMail(mailOptions);
+        console.log("result :",info)
+        console.timeEnd("email send time")
         console.log(`OTP sent successfully to ${toEmail}. MessageID: ${info.messageId}`);
         return { success: true, messageId: info.messageId };
 

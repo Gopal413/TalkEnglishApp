@@ -55,7 +55,13 @@ function VerifyOtp() {
         } else {
             setCanResend(true);
         }
+
     }, [resendCooldown]);
+
+
+    useEffect(() => {
+    console.log("Verify OTP page loaded");
+}, []);
 
     const handleOtpSubmit = async (e) => {
         e.preventDefault();
@@ -113,16 +119,16 @@ function VerifyOtp() {
                     label="6-Digit Code" 
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)} 
-                    disabled={loading || otpExpired}
-                    inputProps={{ 
-                        maxLength: 6, 
-                        style: { 
-                            textAlign: 'center', 
-                            letterSpacing: '8px', 
+                    disabled={loading || otpExpired} 
+                    inputProps={{ maxLength: 6 }}
+                    sx={{
+                        '& .MuiInputBase-input': {
+                            textAlign: 'center',
+                            letterSpacing: '8px',
                             fontSize: '22px',
                             fontWeight: 'bold',
                             color: '#fff'
-                        } 
+                        }
                     }}
                 />
                 

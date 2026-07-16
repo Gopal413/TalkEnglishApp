@@ -19,13 +19,23 @@ function EmailForm() {
         setError(''); 
         
         try {
-            const response = await sendOtpOnly(email); 
+            console.log("email", email)
+            const response = await sendOtpOnly(email);
+console.log("OTP Success"); 
             navigate('/verify-otp', { state: { 
                 userEmail: email,
                 otpExpiresAt: response.otpExpiresAt 
             }}); 
+            console.log("Navigate executed");
+            console.log("otp",response.data.otp)
         } catch (err) {
             setError(err.response?.data?.error || 'Failed to send verification code');
+            console.log("===== API ERROR =====");
+    console.log(err);
+    console.log(err.response);
+    console.log(err.response?.status);
+    console.log(err.response?.data);
+    console.log(err.message);
         } finally {
             setLoading(false);
         }

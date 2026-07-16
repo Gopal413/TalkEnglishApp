@@ -51,16 +51,16 @@ function ResetOtpForm() {
                     disabled={loading} 
                     autoFocus
                     value={otp} 
-                    onChange={(e) => setOtp(e.target.value)}
-                    inputProps={{ 
-                        maxLength: 6, 
-                        style: { 
-                            textAlign: 'center', 
-                            letterSpacing: '8px', 
-                            fontSize: '22px', 
+                    onChange={(e) => setOtp(e.target.value)} 
+                    inputProps={{ maxLength: 6 }}
+                    sx={{
+                        '& .MuiInputBase-input': {
+                            textAlign: 'center',
+                            letterSpacing: '8px',
+                            fontSize: '22px',
                             fontWeight: 'bold',
                             color: '#fff'
-                        } 
+                        }
                     }}
                 />
                 <Button

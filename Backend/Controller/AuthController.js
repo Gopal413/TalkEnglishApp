@@ -18,6 +18,7 @@ async function OnlyEmail(req, res) {
     console.log("emailonly")
     try {
         const { email } = req.body;
+        console.log("email id :",email)
         if (!email) return res.status(400).json({ error: 'Email is required' });
 
         // Check if user already exists completely in the system
@@ -25,7 +26,7 @@ async function OnlyEmail(req, res) {
         if (existingUser) return res.status(400).json({ error: 'User already exists' });
 
         const otp = generateOtp();
-
+        console.log("otp :",otp)
         // WHY: We save this to memory because the database requires Name and Password to create a user.
         const expiresAt = Date.now() + 5 * 60 * 1000; // 5 minutes validity
         tempOtpStorage[email] = {
@@ -34,7 +35,21 @@ async function OnlyEmail(req, res) {
             isVerified: false
         };
 
-        await sendOTPEmail(email, otp);
+console.log("emailonly");
+console.log("email:", email);
+
+console.log("Before sendOTPEmail");
+const result = await sendOTPEmail(email, otp);
+console.log("After sendOTPEmail");
+console.log(result);
+if (!result.success) {
+    console.error(result.error);
+    return res.status(500).json({
+        error: "Failed to send OTP email"
+    });
+}
+
+       
 
         // WHY: We drop the email into a cookie so the frontend doesn't have to resend it on the next step
         res.cookie('user_email', email, { 
@@ -46,6 +61,7 @@ async function OnlyEmail(req, res) {
 
         return res.status(200).json({
             message: 'OTP sent successfully!',
+            opt,
             otpExpiresAt: expiresAt // Send expiration timestamp to frontend
         });
     } catch (err) {

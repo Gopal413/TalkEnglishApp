@@ -33,6 +33,7 @@ export function AuthProvider({ children }) {
                     setUser(response.data); // Re-authenticate user state seamlessly
                     localStorage.setItem('user_profile', JSON.stringify(response.data));
                 }
+                console.log("resonpe",)
             } catch (err) {
                 console.log("No active or valid session cookie found.");
                 setUser(null);
