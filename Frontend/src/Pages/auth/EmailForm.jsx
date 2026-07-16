@@ -27,7 +27,8 @@ console.log("OTP Success");
                 otpExpiresAt: response.otpExpiresAt 
             }}); 
             console.log("Navigate executed");
-            console.log("otp",response.data.otp)
+            console.log("response  :",response)
+            console.log("otp",response.otp)
         } catch (err) {
             setError(err.response?.data?.error || 'Failed to send verification code');
             console.log("===== API ERROR =====");

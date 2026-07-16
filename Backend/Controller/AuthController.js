@@ -9,7 +9,7 @@ const tempOtpStorage = {};
 
 // Helper function to generate a secure 6-digit random number
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
-
+console.log("gen :",generateOtp())
 
 // =========================================================================
 // 1. ONLY EMAIL (Send OTP before registration)
@@ -61,7 +61,7 @@ if (!result.success) {
 
         return res.status(200).json({
             message: 'OTP sent successfully!',
-            opt,
+            otp: otp,
             otpExpiresAt: expiresAt // Send expiration timestamp to frontend
         });
     } catch (err) {
