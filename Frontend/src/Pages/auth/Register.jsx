@@ -115,7 +115,7 @@ function Register() {
                     disabled={loading} 
                     sx={{ mt: 4, py: 1.5, borderRadius: '24px', fontWeight: 'bold', textTransform: 'none', fontSize: '16px' }}
                 >
-                    {loading ? <CircularProgress size={24} color="inherit" /> : 'Create Account'}
+                    {loading ? <CircularProgress size={24} sx={{color:'white'}} /> : 'Create Account'}
                 </Button>
 
                 <Grid container sx={{ justifyContent: "center", mt: 3 }}>

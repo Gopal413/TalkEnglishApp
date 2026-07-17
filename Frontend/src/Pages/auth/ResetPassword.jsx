@@ -86,7 +86,7 @@ function ResetPassword() {
                     disabled={loading || !password || !confirmPassword}
                     sx={{ mt: 4, py: 1.4, borderRadius: '24px', fontWeight: 'bold', textTransform: 'none' }}
                 >
-                    {loading ? <CircularProgress size={24} color="inherit" /> : 'Save New Password'}
+                    {loading ? <CircularProgress size={24} sx={{color:'white'}} /> : 'Save New Password'}
                 </Button>
             </Box>
         </AuthLayout>

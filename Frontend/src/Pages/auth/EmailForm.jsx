@@ -71,7 +71,7 @@ console.log("OTP Success");
                     endIcon={!loading && <ArrowForwardOutlined />} 
                     sx={{ mt: 3, py: 1.4, borderRadius: '24px', fontWeight: 'bold' }}
                 >
-                    {loading ? <CircularProgress size={24} color="inherit" /> : 'Get Started'}
+                    {loading ? <CircularProgress size={24} sx={{color:'white'}} /> : 'Get Started'}
                 </Button>
             </Box>
 

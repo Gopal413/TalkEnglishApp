@@ -141,7 +141,7 @@ function Login() {
                     disabled={loading}
                     sx={{ mt: 1, mb: 3, py: 1.4, borderRadius: '24px', fontWeight: 'bold', textTransform: 'none', fontSize: '16px' }}
                 >
-                    {loading ? <CircularProgress size={24} color="inherit" /> : 'Sign In'}
+                    {loading ? <CircularProgress size={24} sx={{color:'white'}} /> : 'Sign In'}
                 </Button>
 
                 {/* FOOTER LINK TO SIGN UP PAGE */}

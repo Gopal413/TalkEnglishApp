@@ -74,7 +74,7 @@ function ForgotPassword() {
                     endIcon={!loading && <ArrowForwardOutlined />}
                     sx={{ mt: 3, mb: 2, py: 1.4, borderRadius: '24px', fontWeight: 'bold', textTransform: 'none' }}
                 >
-                    {loading ? <CircularProgress size={24} color="inherit" /> : 'Send Reset Code'}
+                    {loading ? <CircularProgress size={24} sx={{color:'white'}} /> : 'Send Reset Code'}
                 </Button>
                 
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>

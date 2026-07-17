@@ -71,7 +71,7 @@ function ResetOtpForm() {
                     disabled={loading || !otp}
                     sx={{ mt: 4, py: 1.4, borderRadius: '24px', fontWeight: 'bold', textTransform: 'none' }}
                 >
-                    {loading ? <CircularProgress size={24} color="inherit" /> : 'Verify Code'}
+                    {loading ? <CircularProgress size={24} sx={{color:'white'}} /> : 'Verify Code'}
                 </Button>
             </Box>
         </AuthLayout>

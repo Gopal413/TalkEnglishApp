@@ -139,7 +139,7 @@ function VerifyOtp() {
                     disabled={loading || !otp || otpExpired} 
                     sx={{ mt: 3, py: 1.4, borderRadius: '24px', fontWeight: 'bold' }}
                 >
-                    {loading ? <CircularProgress size={24} color="inherit" /> : 'Verify Code'}
+                    {loading ? <CircularProgress size={24} sx={{color:'white'}} /> : 'Verify Code'}
                 </Button>
 
                 <Typography variant="body2" align="center" sx={{ mt: 4, color: 'rgba(255,255,255,0.6)' }}>
