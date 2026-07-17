@@ -28,8 +28,21 @@ export const completeRegistration = async (profileData) => {
 // ==========================================
 
 // User/Admin Login
-export const loginUser = async (email, password) => {
-    const response = await axiosInstance.post('/auth/login', { email, password });
+export const loginUser = async (email, password,loginWithOTP) => {
+    const response = await axiosInstance.post('/auth/login', { email, password, loginWithOTP });
+    return response.data;
+};
+
+// Step 2:Login Verify OTP
+export const verifyLoginOtp = async (otp) => {
+    const response = await axiosInstance.post('/auth/login/verify-otp', { otp });
+    return response.data;
+};
+
+// Resend Login OTP
+export const resendLoginOtp = async () => {
+    const response = await axiosInstance.post("/auth/login/resend-otp");
+
     return response.data;
 };
 

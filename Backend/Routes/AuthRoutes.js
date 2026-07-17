@@ -11,7 +11,9 @@ const {
     verifyResetOtp, 
     resetPassword,
     refreshToken,
-    logout
+    logout,
+    LoginVerifyOtp,
+    ResendLoginOtp
 } = require('../Controller/AuthController');
 
 // ==========================================
@@ -33,6 +35,8 @@ router.post('/register/complete', register);
 
 // WHY: User logs in. Backend verifies credentials and issues access and refresh cookies.
 router.post('/login', login);
+router.post('/login/verify-otp', LoginVerifyOtp);
+router.post("/login/resend-otp", ResendLoginOtp);
 
 // WHY: Manually refresh access token using refresh_token cookie
 router.post('/refresh', refreshToken);

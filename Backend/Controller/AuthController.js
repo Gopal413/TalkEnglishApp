@@ -61,7 +61,6 @@ async function OnlyEmail(req, res) {
 
         return res.status(200).json({
             message: 'OTP sent successfully!',
-            otp: otp,
             otpExpiresAt: expiresAt // Send expiration timestamp to frontend
         });
     } catch (err) {
@@ -73,6 +72,8 @@ async function OnlyEmail(req, res) {
     
     }
 }
+
+
 
 
 // =========================================================================
@@ -149,76 +150,375 @@ async function register(req, res) {
 // =========================================================================
 // 4. LOGIN (Generate Token based on role: User vs Admin)
 // =========================================================================
+
 async function login(req, res) {
-    console.log("login")
+    console.log("Login");
+
     try {
-        console.log(req.body)
-        const { email, password } = req.body;
-        if (!email || !password) return res.status(400).json({ message: "All fields are required" });
 
-        const user = await userModel.findOne({ email });
-        if (!user) return res.status(401).json({ message: "Invalid credentials" });
+        const { email, password, loginWithOTP } = req.body;
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
-
-        // Block disabled accounts
-        if (user.isActive === false) {
-            return res.status(403).json({ message: "Your account has been disabled. Please contact support." });
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "Email and Password are required."
+            });
         }
 
-        // 🔑 Generate access token (expires in 1d) and refresh token (expires in 7d)
+        const user = await userModel.findOne({ email });
+
+        if (!user) {
+            return res.status(401).json({
+                message: "Invalid Email or Password."
+            });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({
+                message: "Invalid Email or Password."
+            });
+        }
+
+        if (!user.isActive) {
+            return res.status(403).json({
+                message: "Your account has been disabled."
+            });
+        }
+
+        // ==========================
+        // LOGIN WITH OTP
+        // ==========================
+
+        if (loginWithOTP) {
+
+            const otp = Math.floor(100000 + Math.random() * 900000).toString();
+            const expiresAt = Date.now() + 5 * 60 * 1000; // 5 minutes validity
+
+            tempOtpStorage[email] = {
+                otp,
+                expiresAt: expiresAt
+            };
+
+            await sendOTPEmail(email, otp);
+
+            res.cookie("user_email", email, {
+                httpOnly: true,
+                maxAge: 5 * 60 * 1000,
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+                secure: process.env.NODE_ENV === "production"
+            });
+
+            return res.status(200).json({
+                success: true,
+                needOTP: true,
+                otpExpiresAt: expiresAt,
+                message: "OTP sent successfully."
+            });
+        }
+
+        // ==========================
+        // LOGIN WITHOUT OTP
+        // ==========================
+
         const token = jwt.sign(
-            { id: user._id, role: user.role || 'user', name: user.name },
-            process.env.JWT_SECRET || 'fallback_secret',
-            { expiresIn: '1d' }
+            {
+                id: user._id,
+                role: user.role,
+                name: user.name
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "1d"
+            }
         );
 
         const refreshToken = jwt.sign(
-            { id: user._id, role: user.role || 'user', name: user.name },
-            process.env.JWT_REFRESH_SECRET || 'fallback_refresh_secret',
-            { expiresIn: '7d' }
+            {
+                id: user._id,
+                role: user.role,
+                name: user.name
+            },
+            process.env.JWT_REFRESH_SECRET,
+            {
+                expiresIn: "7d"
+            }
         );
 
-        // 🔒 Setting HTTP-Only cookies keeps authentication safe from XSS scripting attacks
-        res.cookie('auth_token', token, {
+        res.cookie("auth_token", token, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-            secure: process.env.NODE_ENV === 'production'
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            secure: process.env.NODE_ENV === "production"
         });
 
-        res.cookie('refresh_token', refreshToken, {
+        res.cookie("refresh_token", refreshToken, {
             httpOnly: true,
             maxAge: 7 * 24 * 60 * 60 * 1000,
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-            secure: process.env.NODE_ENV === 'production'
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            secure: process.env.NODE_ENV === "production"
         });
 
-        console.log("login Token :", token);
-
-        // Send tokens back in JSON body as well for localStorage backup compatibility
         return res.status(200).json({
-            message: "Login successful!",
-            token: token,
-            refreshToken: refreshToken,
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role || 'user',
-                isOnboarded: user.isOnboarded,
-                level: user.level,
-                goal: user.goal,
-                streak: user.streak,
-                lastPracticeDate: user.lastPracticeDate
-            }
+            success: true,
+            needOTP: false,
+            message: "Login Successful.",
+            token,
+            refreshToken,
+            user
         });
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: 'Server error' });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            message: "Server Error"
+        });
+
     }
 }
+
+// async function login(req, res) {
+//     console.log("login")
+//     try {
+//         console.log(req.body)
+//         const { email, password } = req.body;
+//         if (!email || !password) return res.status(400).json({ message: "All fields are required" });
+
+//         const user = await userModel.findOne({ email });
+//         if (!user) return res.status(401).json({ message: "Invalid credentials" });
+
+//         const isMatch = await bcrypt.compare(password, user.password);
+//         if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
+
+//         // Block disabled accounts
+//         if (user.isActive === false) {
+//             return res.status(403).json({ message: "Your account has been disabled. Please contact support." });
+//         }
+//         const verify =user.isVerified;
+
+//        if(verify == false){
+//          // 🔑 Generate access token (expires in 1d) and refresh token (expires in 7d)
+//         const token = jwt.sign(
+//             { id: user._id, role: user.role || 'user', name: user.name },
+//             process.env.JWT_SECRET || 'fallback_secret',
+//             { expiresIn: '1d' }
+//         );
+
+//         const refreshToken = jwt.sign(
+//             { id: user._id, role: user.role || 'user', name: user.name },
+//             process.env.JWT_REFRESH_SECRET || 'fallback_refresh_secret',
+//             { expiresIn: '7d' }
+//         );
+
+//         // 🔒 Setting HTTP-Only cookies keeps authentication safe from XSS scripting attacks
+//         res.cookie('auth_token', token, {
+//             httpOnly: true,
+//             maxAge: 24 * 60 * 60 * 1000,
+//             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+//             secure: process.env.NODE_ENV === 'production'
+//         });
+
+//         res.cookie('refresh_token', refreshToken, {
+//             httpOnly: true,
+//             maxAge: 7 * 24 * 60 * 60 * 1000,
+//             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+//             secure: process.env.NODE_ENV === 'production'
+//         });
+
+//         console.log("login Token :", token);
+//        }
+//         // Send tokens back in JSON body as well for localStorage backup compatibility
+//         return res.status(200).json({
+//             message: "Login successful!",
+//             token: token,
+//             refreshToken: refreshToken,
+//             user: {
+//                 id: user._id,
+//                 name: user.name,
+//                 email: user.email,
+//                 role: user.role || 'user',
+//                 isOnboarded: user.isOnboarded,
+//                 level: user.level,
+//                 goal: user.goal,
+//                 streak: user.streak,
+//                 lastPracticeDate: user.lastPracticeDate
+//             }
+//         });
+//     } catch (err) {
+//         console.error(err);
+//         return res.status(500).json({ error: 'Server error' });
+//     }
+// }
+
+
+async function LoginVerifyOtp(req, res) {
+
+    try {
+
+        const { otp } = req.body;
+
+        const email = req.cookies.user_email;
+
+        if (!email) {
+            return res.status(400).json({
+                message: "Session expired."
+            });
+        }
+
+        if (!otp) {
+            return res.status(400).json({
+                message: "OTP is required."
+            });
+        }
+
+        const record = tempOtpStorage[email];
+
+        if (!record) {
+            return res.status(400).json({
+                message: "OTP not found."
+            });
+        }
+
+        if (Date.now() > record.expiresAt) {
+
+            delete tempOtpStorage[email];
+
+            return res.status(400).json({
+                message: "OTP expired."
+            });
+        }
+
+        if (record.otp !== otp.trim()) {
+            return res.status(400).json({
+                message: "Invalid OTP."
+            });
+        }
+
+        delete tempOtpStorage[email];
+
+        const user = await userModel.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found."
+            });
+        }
+
+        const token = jwt.sign(
+            {
+                id: user._id,
+                role: user.role,
+                name: user.name
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "1d"
+            }
+        );
+
+        const refreshToken = jwt.sign(
+            {
+                id: user._id,
+                role: user.role,
+                name: user.name
+            },
+            process.env.JWT_REFRESH_SECRET,
+            {
+                expiresIn: "7d"
+            }
+        );
+
+        res.cookie("auth_token", token, {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000,
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            secure: process.env.NODE_ENV === "production"
+        });
+
+        res.cookie("refresh_token", refreshToken, {
+            httpOnly: true,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            secure: process.env.NODE_ENV === "production"
+        });
+
+        res.clearCookie("user_email");
+
+        return res.status(200).json({
+            success: true,
+            needOTP: false,
+            message: "Login Successful.",
+            token,
+            refreshToken,
+            user
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            message: "Server Error"
+        });
+
+    }
+
+}
+
+async function ResendLoginOtp(req, res) {
+
+    try {
+
+        const email = req.cookies.user_email;
+
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                message: "Session expired. Please login again."
+            });
+        }
+
+        const user = await userModel.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found."
+            });
+        }
+
+        // Generate New OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+        tempOtpStorage[email] = {
+            otp,
+            expiresAt: Date.now() + 5 * 60 * 1000
+        };
+
+        // Send Email
+        await sendOTPEmail(email, otp);
+
+        return res.status(200).json({
+            success: true,
+            message: "OTP sent successfully.",
+            otpExpiresAt: Date.now() + 5 * 60 * 1000
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Server Error"
+        });
+
+    }
+
+}
+
 
 // =========================================================================
 // 4.1 GET PROFILE (Verify session and get user data)
@@ -414,6 +714,8 @@ module.exports = {
     verifyOtp,
     register,
     login,
+    LoginVerifyOtp,
+    ResendLoginOtp,
     forgetPassword,
     verifyResetOtp,
     resetPassword,

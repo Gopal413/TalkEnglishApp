@@ -41,31 +41,109 @@ function Login() {
         mode: 'onBlur'
     });
 
-    const handleLoginSubmit = async (formData) => {
-        setLoading(true);
-        try {
-            const data = await loginUser(formData.email, formData.password);
-            
-            if (data.token) localStorage.setItem('auth_token', data.token);
-            if (data.refreshToken) localStorage.setItem('refresh_token', data.refreshToken);
-            login(data.user); 
+    //const LoginVerifyOtp = true;
 
-            // Role-based redirect
-            if (data.user.role === 'superadmin') {
-                navigate('/superadmin', { replace: true });
-            } else if (data.user.role === 'admin') {
-                navigate('/admin', { replace: true });
-            } else if (data.user.isOnboarded === false) {
-                navigate('/onboarding', { replace: true });
-            } else {
-                navigate('/dashboard', { replace: true });
-            }
-        } catch (err) {
-            showSnackbar(err.response?.data?.error || 'Invalid email or password combination.', 'error');
-        } finally {
-            setLoading(false);
+    // const handleLoginSubmit = async (formData) => {
+    //     setLoading(true);
+    //     try {
+    //         const data = await loginUser(formData.email, formData.password,LoginVerifyOtp);
+            
+    //         if (data.token) localStorage.setItem('auth_token', data.token);
+    //         if (data.refreshToken) localStorage.setItem('refresh_token', data.refreshToken);
+    //         login(data.user); 
+
+    //         // Role-based redirect
+    //         if (data.user.role === 'superadmin') {
+    //             navigate('/superadmin', { replace: true });
+    //         } else if (data.user.role === 'admin') {
+    //             navigate('/admin', { replace: true });
+    //         } else if (data.user.isOnboarded === false) {
+    //             navigate('/onboarding', { replace: true });
+    //         } else {
+    //             navigate('/dashboard', { replace: true });
+    //         }
+    //     } catch (err) {
+    //         showSnackbar(err.response?.data?.error || 'Invalid email or password combination.', 'error');
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+    const handleLoginSubmit = async (formData) => {
+
+    setLoading(true);
+
+    try {
+
+        const loginWithOTP = true; // Change to false for direct login
+
+        const data = await loginUser(
+            formData.email,
+            formData.password,
+            loginWithOTP
+        );
+
+        // OTP required
+        if (data.needOTP) {
+
+            showSnackbar("OTP sent successfully.", "success");
+
+            navigate("/login-verify-otp", {
+                state: {
+                    email: formData.email,
+                    otpExpiresAt: data.otpExpiresAt,
+                },
+            });
+
+            return;
         }
-    };
+
+        // Direct Login
+
+        if (data.token) {
+            localStorage.setItem("auth_token", data.token);
+        }
+
+        if (data.refreshToken) {
+            localStorage.setItem("refresh_token", data.refreshToken);
+        }
+
+        login(data.user);
+
+        if (data.user.role === "superadmin") {
+
+            navigate("/superadmin", { replace: true });
+
+        } else if (data.user.role === "admin") {
+
+            navigate("/admin", { replace: true });
+
+        } else if (!data.user.isOnboarded) {
+
+            navigate("/onboarding", { replace: true });
+
+        } else {
+
+            navigate("/dashboard", { replace: true });
+
+        }
+
+    } catch (err) {
+
+        showSnackbar(
+            err.response?.data?.message ||
+            err.response?.data?.error ||
+            "Login failed.",
+            "error"
+        );
+
+    } finally {
+
+        setLoading(false);
+
+    }
+
+};
 
     return (
         <AuthLayout 

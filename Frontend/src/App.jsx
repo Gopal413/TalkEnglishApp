@@ -36,6 +36,7 @@ import AdminDashboard from './Pages/Admin/AdminDashboard';
 import AdminUsersPage from './Pages/Admin/AdminUsersPage';
 import AdminLessonsPage from './Pages/Admin/AdminLessonsPage';
 import AdminRoute from './Components/layout/AdminRoute';
+import LoginVerifyOtp from './Pages/auth/LoginVerifyOtp';
 
 // Hide navbar on superadmin/admin routes
 function AppNavbar() {
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/verify-otp" element={<VerifyOtp />} />
                 <Route path="/complete-profile" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/login-verify-otp" element={<LoginVerifyOtp />} />
 
                 {/* Password Reset Flow */}
                 <Route path="/forgot-password" element={<ForgotPassword />} />
