@@ -65,6 +65,17 @@ const UserSchema = new mongoose.Schema({
         default: null 
     },
 
+    // Account Locking Fields
+    loginAttempts: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    lockUntil: {
+        type: Date,
+        default: null
+    },
+
     // ==========================================
     // 🚩 THE GATEKEEPER SWITCH
     // ==========================================

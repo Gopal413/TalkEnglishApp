@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
+const { globalLimiter, authLimiter, otpLimiter } = require('./Middleware/rateLimiter');
 const connectDB = require('./Config/dbConfig');
 
 // Double-check the exact file system naming of your folders here!
@@ -18,6 +20,7 @@ const { seedSuperAdmin } = require('./Controller/SuperAdminController');
 
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 5000;
 
 // Connect to Database
@@ -50,10 +53,20 @@ app.use(cors({
 }));
 app.use(express.json()); // Parsers MUST stay right here
 app.use(cookieParser());
+app.use(helmet());
+app.use(globalLimiter);
 
 // ==========================================
-// ROUTES
+// ROUTES & RATE LIMITERS FOR SENSITIVE ENDPOINTS
 // ==========================================
+app.use('/auth/register/send-otp', otpLimiter);
+app.use('/auth/login/resend-otp', otpLimiter);
+app.use('/auth/password/forget', otpLimiter);
+
+app.use('/auth/login', authLimiter);
+app.use('/auth/register/complete', authLimiter);
+app.use('/auth/password/reset', authLimiter);
+
 app.use("/auth", authRoutes); 
 app.use("/user", isUserMiddleware, userRoutes);
 
@@ -71,6 +84,15 @@ app.post("/auth/admin/seed", seedSuperAdmin); // One-time seed route (disabled i
 
 app.get('/', (req, res) => {
   res.json({ message: 'Hello from the backend! talkenglish' });
+});
+
+// Centralized Global Error Handler Middleware
+app.use((err, req, res, next) => {
+  console.error("Unhandled Error:", err);
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || "Internal Server Error"
+  });
 });
 
 app.listen(PORT, () => {

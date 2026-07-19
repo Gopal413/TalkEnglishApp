@@ -172,11 +172,28 @@ async function login(req, res) {
             });
         }
 
+        // Check if account is temporarily locked
+        if (user.lockUntil && user.lockUntil > Date.now()) {
+            const remainingTime = Math.ceil((user.lockUntil - Date.now()) / 1000 / 60);
+            return res.status(403).json({
+                message: `Account is temporarily locked. Try again in ${remainingTime} minute(s).`
+            });
+        }
+
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
+            user.loginAttempts = (user.loginAttempts || 0) + 1;
+            if (user.loginAttempts >= 5) {
+                user.lockUntil = Date.now() + 15 * 60 * 1000; // 15 mins lock
+            }
+            await user.save();
+
+            const remaining = Math.max(0, 5 - user.loginAttempts);
             return res.status(401).json({
-                message: "Invalid Email or Password."
+                message: user.loginAttempts >= 5
+                    ? "Too many failed attempts. Account locked for 15 minutes."
+                    : `Invalid Email or Password. Attempts remaining: ${remaining}`
             });
         }
 
@@ -184,6 +201,13 @@ async function login(req, res) {
             return res.status(403).json({
                 message: "Your account has been disabled."
             });
+        }
+
+        // Reset locking fields on successful login
+        if (user.loginAttempts > 0 || user.lockUntil) {
+            user.loginAttempts = 0;
+            user.lockUntil = null;
+            await user.save();
         }
 
         // ==========================
